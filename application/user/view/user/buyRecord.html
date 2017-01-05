@@ -1,0 +1,77 @@
+{include file="../application/common/view/Header.html" /}
+    <head>
+      <link rel="stylesheet" href="__PUBLIC__/style/home.css" />
+      <link rel="stylesheet" type="text/css" href="__PUBLIC__/style/settings.css">
+      <script type="text/javascript" src="__PUBLIC__/js/userindex.js"></script>
+    </head>
+    <div id="main">
+      <div class="main-body container clearfix" id="buy_container">
+        <div class="fr">
+          <img src="__PUBLIC__/upimages/{$info.Uimg}" width="220" height="220" />
+          <div class="main-aside">
+            <h4 class="myname">{$info.Uname}</h4>
+            <p class="job-title">&nbsp;</p>
+            <div class="mysignature">
+              <div class="signWrap">
+                <p id="signed" class="signed">{$info.Udesc}</p>
+                <em></em>
+              </div>
+              <textarea id="signing" class="signing" style="">{$info.Udesc}</textarea>
+              <p id="rlf-tip-wrap" class="rlf-tip-wrap"></p>
+              <div id="rpush_msg" class="push_msg">
+                <span id="publishsign" class="publishsign">发布</span>
+              </div>
+            </div>
+            <ul class="space-item">
+              <li><span class="icon-time icon" title="学习"></span>学习：{$studytime}分钟</li>
+              <li><span class="icon-note icon" title="笔记"></span>
+              笔记：<em>{$notecount}</em>条</li>
+              <li><span class="icon-jifen icon" title="积分"></span>
+              积分 : <em>{$info.Ubeans}</em>个</li>
+            </ul>
+          </div>
+                  </div>
+        <div class="mymain-content fl">
+          <div class="myspace-list">
+            <a href="__APP__/User/User/index" class="myspace-home"></a>
+            <a href="__APP__/User/User/note" class="myspace-note"></a>
+            <a href="__APP__/User/User/buyRecord" class="myspace-buyRecord myspace-buyRecordactive"></a>
+            <a href="__APP__/User/User/rechargeHistory" class="myspace-rechargeHistory"></a>
+          </div>
+          {block name="content"}
+          <div class="order">
+	            <table>
+			        <thead>
+	        			<tr>
+                  <th class="buytime"><span>下单时间</span></th>
+                  <th class="buyclass"><span>购买内容(课程名/章名/节名)</span></th>
+	        				<!-- <th class="buyclass"><span>购买章名字</span></th>
+	        				<th class="buymoney"><span>购买节名字</span></th> -->
+	        				
+	        				<th class="state"><span>花费积分</span></th>
+	        			</tr>
+	        		</thead>
+	        		<tbody>
+              {volist name='buyrecord' id='vo'}
+                <tr>
+                  <th>{$vo.3}</th>
+                  <th>{$vo.0}/{$vo.1}/{$vo.2}</th>
+                  <th class="grade">{$vo.4}</th>
+                </tr>
+              {/volist}
+	        		</tbody>
+	        	</table>
+            <div class="page" id="page">
+                {$pageshow}
+            </div>
+            <input value="{$pagesize}" type="hidden" id="pagesize">
+            <input value="{$count}" type="hidden" id="count"> 
+            <input value="{$page}" type="hidden" id="pagenum">
+            <a href="#" id="omit">...</a> 
+        	</div>
+          {/block}
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript" src="__PUBLIC__/js/page.js"></script>
+{include file="../application/common/view/Footer.html" /}

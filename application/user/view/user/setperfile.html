@@ -1,0 +1,81 @@
+{include file="../application/common/view/Header.html" /}
+    <head>
+      <link rel="stylesheet" href="__PUBLIC__/style/home.css" />
+    </head>
+    <div id="main">
+      <div class="ccontainer clearfix">
+        {include file="Public:User_Setting" /}
+        <div class="setting-right">
+          <div class="setting-right-wrap settings">
+            <div id="setting-profile" class="setting-wrap setting-profile">
+              <div class="wlfg-wrap">
+                <label class="label-name" for="nick">姓名</label>
+                <div class="rlf-group">
+                  <input id="set_name" type="text" name="nickname" autocomplete="off" class="rlf-input rlf-input-nick" placeholder="请输入昵称." value="{$info.Uname}" />
+                  <p class="rlf-tip-wrap"></p>
+                </div>
+              </div>
+              <div class="wlfg-wrap">
+                <label class="label-name stupo" for="nick">位置</label>
+                <div class="rlf-group">
+                  <select id="department-select" >
+                    <option value="0">选择所在省</option>
+                    {volist name='province' id='vo' }
+                    <option value="{$vo.Pcode}" {if condition="$vo['Pname'] eq $info['Uprovince']"}
+                    selected="true"{/if} >{$vo.Pname}</option>
+                    {/volist}
+                  </select>
+                  <select id="subject-select" >
+                    <option value="0">{empty name="info.Ucity"}选择所在市{else/}{$info.Ucity}{/empty}</option>
+                  </select>
+                  <select id="class-select" >
+                    <option value="0">{empty name="info.Utown"}选择所在县{else/}{$info.Utown}{/empty}</option>
+                  </select>
+                </div>
+                <p class="rlf-tip-wrap"></p>
+              </div>
+              <div class="wlfg-wrap">
+                <label class="label-name">性别</label>
+                <div class="rlf-group rlf-radio-group">
+                  <label>
+                    <input type="radio" value="保密" {if condition="$info.Usex eq '保密'" }checked="true"{/if} name="sex" />保密
+                  </label>
+                  <label>
+                    <input type="radio" value="男" name="sex" {if condition="$info.Usex eq '男'" }checked="true"{/if} />男
+                  </label>
+                  <label>
+                    <input type="radio" value="女" name="sex" {if condition="$info.Usex eq '女'" }checked="true"{/if} />女
+                  </label>
+                </div>
+                <p class="rlf-tip-wrap"></p>
+              </div>
+              <!-- <div class="wlfg-wrap">
+                <label class="label-name" for="remind">收费提醒</label>
+                <div class="rlf-group" style="line-height:42px;">
+                  <label>
+                    <input class="yes" id="profile" type="radio" value="0" name="udefault" title="开启收费提醒" <if condition="$info.Udefault eq '0'" >checked="true"</if> />开启
+                  </label>
+                  <label>
+                    <input class="no" id="profile" type="radio" value="1" name="udefault" title="关闭收费提醒" <if condition="$info.Udefault eq '1'" >checked="true"</if> />关闭
+                  </label>
+                  <p class="rlf-tip-wrap"></p>
+                </div>
+              </div> -->
+              <div class="wlfg-wrap">
+                <label class="label-name" for="aboutme">个性签名</label>
+                <div class="rlf-group">
+                  <textarea name="aboutme" id="aboutme" cols="30" rows="5" class="textarea">{$info.Udesc}</textarea>
+                  <p class="rlf-tip-wrap"></p>
+                </div>
+              </div>
+              <div class="wlfg-wrap">
+                <div class="rlf-group">
+                    <span id="profile-submit" class="rlf-btn-green btn-block profile-btn">保存</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{include file="../application/common/view/Footer.html" /}

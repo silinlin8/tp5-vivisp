@@ -1,0 +1,30 @@
+{extend name="infoBase" /}
+{block name="form-area"}
+	{empty name="data"}
+		<form method="post" action="__ROOT__/index.php/Exam/Enroll/addcase" enctype="multipart/form-data" id="form">
+		{else /}
+		<form method="post" action="__ROOT__/index.php/Exam/Enroll/savecase" enctype="multipart/form-data" id="form">
+	{/empty}
+	<div class="prompt-area more-width">
+		其他情况说明(非必填)
+	</div>
+	<div class="edu-info" >
+		<div class="remind-words">
+			如果有其他未说明事宜，请填写： 
+		</div>
+		<div>
+			<table class="tab-info">
+				<tr class="tr-line">
+					<td class="tab-right">
+						<textarea class="remarkPosit" name="othercase">{$data.othercase}</textarea>
+						<label class="metter-color remark-position">70个汉字以内</label>
+					</td>
+				</tr>
+			</table>
+			<div class="savearea">
+				<button type="submit" class="savebutton">保存</button>
+			</div>
+		</div>
+	</div>
+	</form>
+{/block}

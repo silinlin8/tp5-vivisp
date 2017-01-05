@@ -1,0 +1,46 @@
+{include file="../application/common/view/Header.html" /}
+    <head>
+      <link rel="stylesheet" href="__PUBLIC__/style/home.css" />
+      <script type="text/javascript" src="__PUBLIC__/js/userindex.js"></script>
+    </head>
+    <div id="main">
+      <div class="main-body container clearfix">
+        <div class="fr">
+          <img src="__PUBLIC__/upimages/{$info.Uimg}" width="220" height="220" />
+          <div class="main-aside">
+            <h4 class="myname">{$info.Uname}</h4>
+            <p class="job-title">&nbsp;</p>
+            <div class="mysignature">
+              <div class="signWrap">
+                <p id="signed" class="signed">{$info.Udesc}</p>
+                <em></em>
+              </div>
+              <textarea id="signing" class="signing" style="">{$info.Udesc}</textarea>
+              <p id="rlf-tip-wrap" class="rlf-tip-wrap"></p>
+              <div id="rpush_msg" class="push_msg">
+                <span id="publishsign" class="publishsign">发布</span>
+              </div>
+            </div>
+            <ul class="space-item">
+              <li><span class="icon-time icon" title="学习"></span>学习 : {$studytime}分钟</li>
+              <li><span class="icon-note icon" title="笔记"></span>
+              笔记 : <em>{$notecount}</em>条</li>
+              <li><span class="icon-jifen icon" title="积分"></span>
+              积分 : <em>{$info.Ubeans}</em>个</li>
+            </ul>
+          </div>
+        </div>
+        <div class="mymain-content fl">
+          <div class="myspace-list">
+            <a href="__APP__/User/User/index" class="myspace-home{$indexactive}"></a>
+            <a href="__APP__/User/User/note" class="myspace-note{$noteactive}"></a>
+            <a href="__APP__/User/User/buyRecord" class="myspace-buyRecord"></a>
+            <a href="__APP__/User/User/rechargeHistory" class="myspace-rechargeHistory"></a>
+          </div>
+          {block name="content"}
+            模板内容
+          {/block}
+        </div>
+      </div>
+    </div>
+{include file="../application/common/view/Footer.html" /}

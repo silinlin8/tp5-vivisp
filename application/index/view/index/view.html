@@ -1,0 +1,103 @@
+{empty name="uid" }
+    {include file='../application/common/view/IndexHeader.html' /}
+    {else/}
+    {include file='../application/common/view/Header.html' /}
+{/empty}
+    <head><title>{$cInfo.Ltitle}_ViVi视频</title></head>
+    <script type="text/javascript" src="__PUBLIC__/js/checklogin.js"></script>
+    <div id="main" class="tranmain">
+      <div class="classlist container1000">
+        <div class="course-title">
+          <a href="__APP__/Index/Index/courselist" class="back-btn">返回</a>
+          <h1> {$cInfo.Ltitle}</h1>
+        </div>
+        <div class="course_info">
+          <div class="course_video">
+            <div id="VideoCover">
+              <img id="VideoCoverPic" width="600" height="338" alt="" src="__PUBLIC__/upclassimages/{$cInfo.Limage}" />
+            </div>
+            <div class="video" style="display:none">
+              <div class="video_box" id="J_Video"></div>
+            </div>
+          </div>
+          <div class="course_state">
+            <ul>
+              <li>
+                <span>购买人数</span>
+                <em>{$num}</em>
+              </li>
+              <li class="course_hour">
+                <span>课程时长</span>
+                <em>{$cInfo.Ltime}<strong style="font-size:14px">分钟</strong></em>
+              </li>
+               <li>
+                <span>课程难度</span>
+                <em>{if condition="$cInfo['Ldifficulty'] eq 0"}初级
+                    {elseif condition="$cInfo['Ldifficulty'] eq 1" /}中级
+                    {else /}高级
+                 {/if}</em>
+              </li>
+            </ul>
+          </div>
+          <div class="course_intro">
+            <div class="course_description">
+            {$cInfo.Ldesc}
+            </div>
+            <div class="curse_btn">
+              <a href="__APP__/Index/Index/learn?Cid={$cInfo.Lid}">体验学习</a>
+            </div>
+          </div>
+        </div>
+        <div class="course_list">
+          <div class="outline">
+            <h3 class="chapter_catalog">课程提纲</h3>
+            {empty name="sublesson"}
+            <div>
+            对不起，老师还未添加课程
+            </div>
+            {else/}
+            <ul id="couList">
+            {volist name='sublesson' id='vo' }
+            <li class="clearfix open">
+                <a href="__APP__/Index/Index/learn?Cid={$cInfo.Lid}">
+                  <div class="openicon"></div>
+                  <div class="outline_list fl">
+                    <em class="outline_zt"></em>
+                    <h5 class="outline_name">第{$i}章 {$vo.Ltitle}</h5>
+                    <p class="outline_descr">{$vo.Ldesc}</p>
+                  </div>
+                </a>
+              </li>
+              {/volist}
+            </ul>
+            {/empty}
+          </div>
+          <div class="course_right">
+            <dl>
+              <dt>授课老师</dt>
+              <dd>
+                <div class="course_teacher">
+                  <a href="javascript:void(0)" class="teacer_pic">
+                    <img src="__PUBLIC__/upimages/{$tInfo.Uimg}" width="80" height="80" />
+                  </a>
+                  <h3>
+                    <a href="javascript:void(0)">{$tInfo.Uname}</a>
+                    <span class="teacher_icon"><img src="__PUBLIC__/images/uricon.png"></span>
+                  </h3>
+
+                  <br class="clear" />
+                  <div class="tec_discrip autowrap">
+                  {$tInfo.Udesc}
+                  </div>
+                </div>
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+{empty name="uid" }
+    {include file='../application/common/view/IndexFooter.html' /}
+    {else/}
+     {include file='../application/common/view/Footer.html' /}
+{/empty}

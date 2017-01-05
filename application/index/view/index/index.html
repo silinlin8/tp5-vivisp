@@ -1,0 +1,88 @@
+{include file="../application/common/view/IndexHeader.html" /}
+    <div id="main" class="tranmain">
+      <h1 class="hide">ViVi视频--超酷的电网考试在线学习平台</h1>
+      <div class="slider-box">
+        <div id="slider">
+          <ul id="sliderUl">
+            <li id="img-one" class="active" style=""></li>
+            <li id="img-two" style=""></li>
+            <li id="img-three" style=""></li>
+          </ul>
+        </div>
+        <div id="discrip-box">
+          <div class="discrip-bg"></div>
+          <div class="discrip">
+            <h3>换一种方式</h3>
+            <h2>让你更方便的学习</h2>
+            <h4>超酷的电网考试在线学习平台</h4>
+            <div class="btn-area">
+              <a id="enter-btn" href="__APP__/Index/Index/courselist">进入</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="fresh-course">
+        <ul id="fc-list">
+        {volist name='courselist' id='vo' key='k'}
+         <li {if condition='$k%3 eq 0'}class="mr0"{/if}>
+            <a href="__APP__/Index/Index/view?Cid={$vo.Lid}">
+              <img alt="{$vo.Ltitle}" title="{$vo.Ltitle}" src="__PUBLIC__/upclassimages/{$vo.Limage}" />
+              <h5 title="{$vo.Ltitle}">{$vo.Ltitle}</h5>
+              <p>{$vo.Ldesc}</p><div class="tips">
+                <span class="fl">{$vo.Lnum}人购买</span>
+                <span class="fr">课程时长：{$vo.Ltime}分钟</span>
+              </div>
+            </a>
+          </li>
+         {/volist}
+        </ul>
+      </div>
+      <div id="joinus-box">
+        <div class="joinus">
+          <h2>已加入的小伙伴</h2>
+          <div id="speak">
+            <strong>在线学习会让你更优秀的，相信你的选择是最真确的，嘿嘿，加油哦！</strong><i class="arrowdown"></i>
+          </div>
+          <ul>
+            <li class="" rel="106">
+              <div class="pics">
+              <img src="__PUBLIC__/upimages/{$userlist[0]['Uimg']}" width="90" height="90" alt="在线学习真的很不错，超赞呢！"/>
+              </div><h5>{$userlist[0]['Uname']}</h5>
+              <p>{$userlist[0]['Uprovince']}</p>
+            </li>
+
+            <li class="" rel="323">
+              <div class="pics">
+              <img src="__PUBLIC__/upimages/{$userlist[1]['Uimg']}" width="90" height="90" alt="这个网站就是我想要的，给力！">
+              </div><h5>{$userlist[1]['Uname']}</h5>
+              <p>{$userlist[1]['Uprovince']}</p>
+            </li>
+            <li rel="536">
+              <div class="pics">
+                <img src="__PUBLIC__/upimages/{$userlist[2]['Uimg']}" width="90" height="90" alt="现在多学一小时，将来进入电力系统的希望就增加一分!"/>
+              </div>
+              <h5>{$userlist[2]['Uname']}</h5>
+              <p>{$userlist[2]['Uprovince']}</p>
+            </li>
+            <li rel="751" class="">
+              <div class="pics">
+              <img src="__PUBLIC__/upimages/{$userlist[3]['Uimg']}" width="90" height="90" alt="我们一起学习，快来学习吧！"/>
+              </div>
+              <h5>{$userlist[3]['Uname']}</h5>
+              <p>{$userlist[3]['Uprovince']}</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div id="icons">
+        <img src="__PUBLIC__/images/big_icons2.jpg" width="730" height="104" /> 
+        <div class="icontit">
+          <h3>在线学习，让你更好！</h3>
+          <h3>纯干货、学以致用</h3>
+          <h3 class="last">没错、这是很赞的</h3>
+        </div>
+        <i class="arrowdown-png"></i>
+      </div>
+      <a id="enterbtn-large" href="__APP__/Index/Index/courselist">点击进入</a>
+    </div>
+{include file="../application/common/view/IndexFooter.html" /}

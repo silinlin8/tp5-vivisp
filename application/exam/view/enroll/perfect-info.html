@@ -1,0 +1,32 @@
+{extend name="enroll/base" /}
+	{block name="form-area"}
+		{switch name="judge"}
+			{case value = "0"}
+				{include file="profile" /}
+			{/case}
+			{case value = "1"}
+				{include file="EduBack" /}
+			{/case}
+			{case value = "2"}
+				{include file="ability" /}
+			{/case}
+			{case value = "3"}
+				{include file="family" /}
+			{/case}
+			{case value = "4"}
+				{include file="practice" /}
+			{/case}
+			{case value = "5"}
+				{include file="academy" /}
+			{/case}
+			{case value = "6"}
+				{include file="award" /}
+			{/case}
+			{case value = "7"}
+				{include file="attachment" /}
+			{/case}
+			{case value = "8"}
+				{include file="othercase" /}
+			{/case}
+		{/switch}
+	{/block}

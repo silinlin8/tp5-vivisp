@@ -1,0 +1,123 @@
+<include file="Public/Header" />
+<head>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/style/testpaper.css">
+</head>
+<div class="quesitons-container">
+	<div class="btns-area">
+		<h3>已注册学生信息</h3>
+	</div>		
+	<table class="questions-show">
+		<thead class="show-stu-titles">
+			<th>id号</th>
+			<th>姓名</th>
+			<th>电话</th>
+			<th>邮箱</th>
+			<th>身份证号</th>
+		</thead>
+		<tbody class="show-stu-main" id="student-info">
+		</tbody>
+	</table>
+	<div class="page"></div>
+	<input type="hidden" id="page-len" value="{$pages}" />
+</div>
+<script type="text/javascript">
+	// 总页数
+	var pageLen = $("#page-len").val(),
+		currentPage = 1,
+		pageArea = document.getElementsByClassName("page")[0];
+	function getPage (page) {
+		return page === null ? 1 : (page[1] | 0);
+	}
+	var pageTrigger = (function () {
+		var pattern = /\#page\=([\d]+)/;
+		return function (href, ajaxRequest) {
+			ajaxRequest = ajaxRequest || function () {};
+			var page = href.match(pattern);
+			page = getPage(page);
+			currentPage = page;
+			window.history.pushState({page: page}, "", href);
+			ajaxRequest(page);
+		};
+	})();
+	var updatePageArea = function () {
+		var  html = "",
+			judge = pageLen - 5;
+		if (pageLen >= 1) {
+			// 上一页部分
+			if (currentPage === 1) {
+				html += '<span class="disabled_page">首页</span>';
+				html += '<span class="disabled_page">上一页</span>';
+			}	else {
+				html += '<a href="#page=1" class="page-link">首页</a>';
+				html += "<a href='#page=" + (currentPage - 1) +  "' class='page-link'>上一页</a>";
+			} 
+			// 中间页数部分
+			if (judge <= 0) {
+				for (var i = 1; i <= pageLen; i++) {
+					if (i === currentPage) html += '<a href="#page=' + i + '" class="page-link active">' + i + '</a>';
+					else html += '<a href="#page=' + i + '" class="page-link">' + i + '</a>';
+				}
+			} else {
+				if (currentPage > judge) {
+					for (var i = judge + 1; i <= pageLen; i++) {
+						if (i == currentPage) html += '<a href="#page=' + i + '" class="page-link active">' + i + '</a>';
+						else html += '<a href="#page=' + i + '" class="page-link">' + i + '</a>';
+					}
+				} else {
+					html += '<a href="#page=' + currentPage + '" class="page-link active">' + currentPage + '</a>';
+					for (var i = currentPage + 1; i <= currentPage + 4; i++) {
+						html += '<a href="#page=' + i +' " class="page-link">' + i + '</a>';
+					}
+				}
+			}
+			// 下一页部分
+			if (currentPage === pageLen) {
+				html += '<span class="disabled_page">下一页</span>';
+				html += '<span class="disabled_page">尾页</span>';
+			} else {
+				html += '<a href="#page=' + (currentPage + 1) + '" class="page-link">下一页</a>';
+				html += '<a href="#page=' + pageLen + '" class="page-link">尾页</a>';			
+			}
+		}
+		pageArea.innerHTML = html;
+	};
+	function ajaxRequest (num) {
+		$.post(
+			"pagestu",
+			{num: num},
+			function (data) {
+				updateData(JSON.parse(data), document.getElementById("student-info"));
+				updatePageArea();
+				updateLinks();
+			}
+		)
+	}
+	function updateLinks () {
+		Array.prototype.forEach.call(document.getElementsByClassName("page-link"), function (val) {
+			val.addEventListener("click", function (e) {
+				e.preventDefault();
+				pageTrigger(this.href, ajaxRequest);
+			});
+		});
+	}
+	function updateData (data, ele) {
+		var html = "";
+		for (var i = 0, person; person = data[i++];) {
+			html += "<tr><td>" + person.id + "</td><td>" + 
+					person.realname + "<td>" + person.mobile + "</td><td>" + 
+					person.email + "</td><td>" + person.identity +
+					"</td></tr>";
+		}
+		ele.innerHTML = html;
+	}
+	// 绑定事件
+	window.addEventListener("load", function () {
+		pageTrigger(window.location.href, ajaxRequest);
+	}, false);
+	window.addEventListener("popstate", function (e) {
+		var page = e.state.page;
+		ajaxRequest(page);
+	});	
+</script>
+</body>
+</html>

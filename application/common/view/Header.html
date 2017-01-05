@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html lang="zh-CN" class="ie6 lt-ie9 lt-ie7 lt-ie8"><![endif]-->
+<!--[if IE 7]><html lang="zh-CN" class="ie7 lt-ie9 lt-ie8"><![endif]-->
+<!--[if IE 8]><html lang="zh-CN" class="ie8 lt-ie9"> <![endif]-->
+<html lang="zh-CN">
+  <head>
+    <title>ViVi视频</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--[if lt IE 9]><script src="__PUBLIC__/js/html5shiv.js"></script> <![endif]-->
+    <link rel="shortcut icon" href="__PUBLIC__/images/favico.ico">
+    <link rel="stylesheet" href="__PUBLIC__/style/index.css" />
+    <link rel="stylesheet" href="__PUBLIC__/style/login-regist.css" />
+    <link rel="stylesheet" href="__PUBLIC__/layer/skin/layer.css" />
+    <script type="text/javascript">
+          var APP = "__APP__"
+          var ROOT = "__ROOT__"
+    </script>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/layer/layer.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/functions.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/headico.js"></script>
+
+  </head>
+  <body>
+  <!--[if lt IE 8]><div id="browsehappy">你正在使用的浏览器版本过低，请<strong>升级你的浏览器</strong>，获得最佳的浏览体验！</div><![endif]-->
+    <header id="header" class="header">
+      <div id="nav">
+        <div id="logo">
+          <a href="__APP__/Index/Index/index">
+            <span class="logoo"><img src="__PUBLIC__/images/us-sprite.png"></span>
+            ViVi视频
+          </a>
+        </div>
+        <ul class="fl" id="nav-item">
+          <li>
+            <a href="__APP__/Index/Index/courselist">课程</a>
+          </li>
+          <li><a href="__APP__/User/User/index">我的课程</a></li>
+          {if condition="$Think.session.uid neq 11"}
+            <li><a href="__APP__/Exam/Enroll/register.html">模拟电网报名</a></li>
+          {/if}
+          <li><a href="__APP__/Exam/Exam/login.html">模拟电网考试</a></li>
+        </ul>
+        <div id="login-area">
+          <!-- <button id="J-login" hidefocus="true" class="login-btn">登录</button> -->
+          <ul>
+            <li class="my_message">
+              <a href="__APP__/User/User/message" title="我的消息">
+                <i class="msg_icon"></i>
+                <span style="display: none;">我的消息</span>
+              </a>
+              </li>
+            <li class="set_btn">
+              <a id="header-avator"  href="__APP__/User/User/index" >
+                <img id="header_img" width="40" height="40" />
+              </a>
+              <ul id="nav_list">
+                <li><a id="my_space" href="__APP__/User/User/index"></a></li>
+                <li><a id="my_setting" href="__APP__/User/User/setperfile">我的设置</a></li>
+                <li><a id="my_recharge" href="__APP__/User/User/recharge">我要充值</a></li>
+                {if condition="$Think.session.uid eq '11'"}
+                  <li><a href="__APP__/User/Teacher/questype" id="manage-exam">管理试卷</a></li>
+                  <li><a href="__APP__/User/Teacher/showstudent" id="lookstudent">学生信息</a></li>
+                  {else /}
+                {/if}
+                <li><a id="my_logout" href="__APP__/User/Pub/exitSys">退出</a></li>
+              </ul>
+            </li>
+        </ul>
+        </div>
+      </div>
+    </header>

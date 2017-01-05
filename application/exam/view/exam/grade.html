@@ -1,0 +1,19 @@
+{extend name="exam/base" /}
+{block name="container"}
+	<div class="container">
+		<div class="left-area">
+			<img src="__PUBLIC__/images/me_icon_04.gif" id="personphoto">
+			<ul class="basic-info">
+				<li>姓名: {$name}</li>
+				<li>身份证号: {$identity}</li>
+				<li>准考证号: {$orders}</li>
+			</ul>
+		</div>
+		<div class="right-area">
+			<h2 class="login-title">考试成绩</h2>
+			<h1 class="grades">
+				{$result}
+			</h1>
+		</div>
+	</div>
+{/block}

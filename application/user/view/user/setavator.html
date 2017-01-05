@@ -1,0 +1,33 @@
+{include file="../application/common/view/Header.html" /}
+<link rel="stylesheet" href="__PUBLIC__/style/settings.css">
+    <div id="main">
+      <div class="ccontainer clearfix">
+        {include file="Public:User_Setting" /}
+        <div class="setting-right">
+          <div class="setting-right-wrap settings">
+            <div id="setting-avator" class="setting-wrap setting-avator clearfix">
+              <div class="avator-img fl">
+                <img id="headImgshow" src="__PUBLIC__/upimages/{$headimg}" width="220" height="220">
+                <input id="btnchangeImg" type="button" value="换一换" class="js-avator-try avator-try" />
+              </div>
+              <div class="avator-btn-group">
+                <div id="avator-btns" class="avator-btn-inner">
+                  <div class="avator-btn-wrap">
+                   <form enctype="multipart/form-data" id="sky_upform" name="sky_upform"  method="post">
+                      <a href="javascript:void(0)" class="avator-btn-fake">上传头像</a>
+                      <!--<input id="upfile" type="file" title="上传头像"  id="upload" style="display: none;" />-->
+                       <input name="upfile" id="upfile" maxlength="20" size="40" type="file" value="" />
+                        <input name="upmit" type="button" id="upmit" value="上传" />
+                    </form>
+                  </div>
+                </div>
+                <div class="avator-upload-wrap" style="display:none;">
+                <span id="avator-btn-save" class="rlf-btn-green btn-block">保存</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{include file="../application/common/view/Footer.html" /}

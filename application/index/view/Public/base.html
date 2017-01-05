@@ -1,0 +1,16 @@
+{empty name="uid" }
+    {include file='../application/common/view/IndexHeader.html' /}
+    {else/}
+    {include file='../application/common/view/Header.html' /}
+{/empty}
+<head>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/style/exam.css">
+</head>
+{block name="container"}
+	
+{/block}
+{empty name="uid" }
+    {include file='../application/common/view/IndexFooter.html' /}
+    {else/}
+     {include file='../application/common/view/Footer.html' /}
+{/empty}

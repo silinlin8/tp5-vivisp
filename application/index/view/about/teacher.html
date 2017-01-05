@@ -1,0 +1,44 @@
+{empty name="uid" }
+    {include file='../application/common/view/IndexHeader.html' /}
+    {else/}
+    {include file='../application/common/view/Header.html' /}
+{/empty}
+  <head><title>vivi视频网_老师招募</title></head>
+  <link rel="stylesheet" href="__PUBLIC__/style/about.css"/>
+  <div id="main">
+    <div class="container clearfix">
+      {include file='Public:AboutLeft' /}
+      <div class="other-right ">
+        <div class="other-right-wrap others">
+          <div id="pjax-container">
+            <h1>网站说明</h1>
+            <p>想试水尝尝网络老师的滋味？快加入vivi视频网老师队伍吧！</p>
+            <div class="job-block">
+              <h2>我们希望你：</h2>
+              <ol>
+                <li>热衷分享；</li>
+                <li>有3年以上老师经验；</li>
+              </ol>
+              <h2>你的收获：</h2>
+              <ol>
+                <li>额外收入；</li>
+                <li>技术的沉淀与分享；</li>
+              </ol>
+              <h2>快联系我们吧！</h2>
+              <h3>李薇薇</h3>
+              <p class="recruit-contact">
+                电话：<span>13273289275</span><br>
+                QQ: <span>471383438</span> <br>
+                QQ群：<span>234462665&nbsp;&nbsp;&nbsp;234625512</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{empty name="uid" }
+    {include file='../application/common/view/IndexFooter.html' /}
+    {else/}
+     {include file='../application/common/view/Footer.html' /}
+{/empty}

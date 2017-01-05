@@ -1,0 +1,111 @@
+<include file="../application/common/view/Header.html" />
+  	<div class="recharge-main">
+  		<div class="recharge-container">
+  			<div class="username">
+      			<label>账号名称:</label>
+      			<span>zp</span>
+      		</div>
+      		<div class="buy">
+      			<label>购买积分:</label>
+      			<ul>
+      				<li class="tab">
+      					<div class="buy-grade">
+      						<div class="discount">
+      							5<span style="font-size:12px;">折</span>
+      							<img src="__PUBLIC__/images/true.png">
+      						</div>
+      						<div class="money">
+      						<p class="real-money"><span>50元</span>100积分</p>
+      						<p class="delete-money">原价<del>100</del>元</p>
+      						<img src="__PUBLIC__/images/recharge.png">
+      						</div>
+      					</div>
+      				</li>
+      				<li class="tab">
+      					<div class="buy-grade">
+      						<div class="discount">
+      							7<span style="font-size:12px;">折</span>
+      							<img src="__PUBLIC__/images/true.png">
+      						</div>
+      						<div class="money">
+      						<p class="real-money">xxx元xxx积分</p>
+      						<p class="delete-money">原价<del>xxx</del>元</p>
+      						</div>
+      					</div>
+      				</li>
+      				<li class="tab">
+      					<div class="buy-grade">
+      						<div class="discount">
+      							9<span style="font-size:12px;">折</span>
+      							<img src="__PUBLIC__/images/true.png">
+      						</div>
+      						<div class="money">
+      						<p class="real-money">xx元xxx积分</p>
+      						<p class="delete-money">原价<del>xx</del>元</p>
+      						</div>
+      					</div>
+      				</li>
+      			</ul>
+      		</div>
+      		<div class="more-money">
+      			<label>还需支付:</label>
+      			<span></span>
+      			<span style="font-size:14px;">元</span>
+      		</div>
+      		<div class="recharge-way">
+      			<label>支付方式:</label>
+      			<div class="img-zhifubao">
+      					<img src="__PUBLIC__/images/zhifubao.png" class="zhifu">
+      					<img src="__PUBLIC__/images/check-g.png" class="check">
+      			</div>
+      		</div>
+      		<div class="more-money">
+      			<label>应付金额:</label>
+      			<span></span>
+      			<span style="font-size:14px;">元</span>
+      		</div>
+      		<div class="pay-button">
+      			<a href="">
+      				<button type="button">立即支付</button>
+      			</a>
+      		</div>
+  		</div>
+    </div>
+    <script>
+    	window.onload = function(){
+    		var tab = document.getElementsByClassName("tab");
+    		var buy_grade=[];
+    		var discount = [];
+    		var money = [];
+    		var text = "";
+    		var more = document.getElementsByClassName("more-money")[0];
+    		var more1 = document.getElementsByClassName("more-money")[1];
+    		var more_span = more.getElementsByTagName("span")[0];
+    		var more_span1 = more1.getElementsByTagName("span")[0];
+    		var pattern = /[0-9]{1,3}/;
+    		for ( var i = 0; i < tab.length; i++) {
+    			buy_grade.push(tab[i].childNodes[1]);
+    			discount.push(buy_grade[i].childNodes[1]);
+    			money.push(buy_grade[i].childNodes[3]);
+    		}
+    		for ( var i = 0; i < buy_grade.length; i++) {
+    			buy_grade[i].index = i;
+    			buy_grade[i].onclick = function() {
+    				for ( var i= 0; i < discount.length; i++){
+    					discount[i].className = "discount";
+    					money[i].className = "money";
+    					buy_grade[i].className = "buy-grade";
+    				};
+    				this.className = "dis";
+    				this.childNodes[1].className = "click-discount";
+    				this.childNodes[3].className = "click-money"; 
+    				text = document.getElementsByClassName("click-money")[0].getElementsByTagName("p")[0].innerText;
+    				var text_number = text.indexOf("元");
+    				var real_text = text.substr(0,text_number);
+    				more_span.innerText = real_text;
+    				more_span1.innerText = real_text;
+    			}
+    		}
+		}
+    </script>
+    <include file="../application/common/view/Footer.html" />

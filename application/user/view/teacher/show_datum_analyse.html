@@ -1,0 +1,19 @@
+<volist name="datum_analyse" id="vo">
+    <div id="test-editormd-view-datum{$i}" class="test-editormd-view" style="width:80%;float:right;">
+        {$i}.&nbsp;
+        <textarea style="display:none;">
+            {$vo.content}
+        </textarea>
+        <input type="radio" value="A,{$vo.id}" name="{$vo.id}" />
+        <label>A</label>
+        <input type="radio" value="B,{$vo.id}" name="{$vo.id}" />
+        <label>B</label>
+        <input type="radio" value="C,{$vo.id}" name="{$vo.id}" />
+        <label>C</label>
+        <input type="radio" value="D,{$vo.id}" name="{$vo.id}" />
+        <label>D</label>
+        <label>答案不确定:</label>
+        <input type="checkbox" id="{$i}" class="canClick" />
+        <br />
+    </div>
+</volist>

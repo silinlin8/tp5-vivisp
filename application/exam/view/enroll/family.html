@@ -1,0 +1,84 @@
+{extend name="enroll/infoBase" /}
+{block name="form-area"}
+	{empty name="data"}
+		<form method="post" action="__ROOT__/index.php/Exam/Enroll/addfam" enctype="multipart/form-data" id="form">
+		{else /}
+		<form method="post" action="__ROOT__/index.php/Exam/Enroll/savefam" enctype="multipart/form-data" id="form">
+	{/empty}
+	<div class="prompt-area more-width">
+		主要家庭成员(非必填)
+	</div>
+	<div class="edu-info" >
+			<div id="Landiv">
+			<table class="tab-info">
+				<tr class="tr-line">
+					<td class="tab-right tab-parent">
+						父亲信息：
+					</td>
+				</tr>
+				<tr class="tr-line">
+					<td class="tab-left">
+						<span class="red-font">*</span>姓名:
+					</td>
+					<td class="tab-right">
+						<input type="text" name="fname" value="{$data.fname}" class="selLen"></input>
+					</td>
+				</tr>
+				<tr class="tr-line">
+					<td class="tab-left">
+						<span class="red-font">*</span>工作单位:
+					</td>
+					<td class="tab-right">
+						<input type="text" name="fjob" value="{$data.fjob}" class="mesInput"></input>
+						<label class="metter-color label-position left-control">40个汉字以内</label>
+					</td>
+				</tr>
+				<tr class="tr-line">
+					<td class="tab-left">
+						<span>职务岗位:</span>
+					</td>
+					<td class="tab-right">
+						<input type="text" name="fposition" value="{$data.fposition}" class="mesInput"></input>
+						<label class="metter-color label-position left-control">40个汉字以内</label>
+					</td>
+				</tr>
+				<tr class="tr-line">
+					<td class="tab-right tab-parent">
+						母亲信息：
+					</td>
+				</tr>
+				<tr class="tr-line">
+					<td class="tab-left">
+						<span class="red-font">*</span>姓名:
+					</td>
+					<td class="tab-right">
+						<input type="text" name="mname" value="{$data.mname}" class="selLen"></input>
+					</td>
+				</tr>
+				<tr class="tr-line">
+					<td class="tab-left">
+						<span class="red-font">*</span>工作单位:
+					</td>
+					<td class="tab-right">
+						<input type="text" name="mjob" value="{$data.mjob}" class="mesInput"></input>
+						<label class="metter-color label-position left-control">40个汉字以内</label>
+					</td>
+				</tr>
+				<tr class="tr-line">
+					<td class="tab-left">
+						<span>职务岗位:</span>
+					</td>
+					<td class="tab-right">
+						<input type="text" name="mposition" value="{$data.mposition}" class="mesInput"></input>
+						<label class="metter-color label-position left-control">40个汉字以内</label>
+					</td>
+				</tr>
+			</table>
+			<div class="savearea">
+				<button type="submit" class="savebutton">保存</button>
+			</div>
+			</div>
+		</div>
+	</form>
+	<script type="text/javascript" src="__PUBLIC__/js/ability.js"></script>
+{/block}

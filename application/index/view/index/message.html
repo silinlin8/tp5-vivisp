@@ -1,0 +1,120 @@
+{include file="../application/common/view/Header.html" /}
+    <head>
+      <title>消息-学吧网</title>
+      <link rel="stylesheet" href="__PUBLIC__/style/message.css" />
+      <script type="text/javascript" src="__PUBLIC__/js/message.js"></script>
+    </head>
+    <div id="main">
+    <input id="user_img" type="hidden" value="{$userinfo.Uimg}" />
+    <input id="mtouid" type="hidden" value="{$mtouid}" />
+      <div class="container clearfix">
+        <div id="left_panel">
+          <ul id="left_panel_nav">
+            <li id="msg_new">
+              <a class="active" href="#" title="最近">
+              </a>
+            </li>
+          </ul>
+          <div class="left_panel_content">
+            <div id="list_waper" style="">
+              <ul id="lastChat" class="user_list">
+              {if condition='$utype eq 2'}
+                  {volist name='userlist' id='vo'}
+                    <li id="lastChat10000" uid="10000" class="active">
+                    <a href="__APP__/Index/message?uid={$vo.Uid}">
+                      <img src="__PUBLIC__/upimages/{$vo.Uimg}" alt="" width="40" height="40">
+                      <div class="info">
+                        <h5>
+                          {$vo.Uname}
+                          {if condition='$vo["mcount"] gt 0'}
+                          <i class="message_icon">{$vo.mcount}</i>
+                          </if>
+                        </h5>
+                      </div>
+                    </a>
+                    </li>
+                  {/volist}
+              {else/}
+                  <li id="lastChat10000" uid="10000" class="active">
+                          <img src="__PUBLIC__/upimages/{$admin.Uimg}" alt="" width="40" height="40">
+                          <div class="info">
+                            <h5>
+                              {$admin.Uname}
+                            </h5>
+                          </div>
+                  </li>
+              {/if}
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div id="chat_container">
+          <div id="chat_content">
+            <ul id="userchatUl10000" uid="10000" class="userchatUl" style="display: block;">
+   			{volist name='messageInfo' id='vo'}
+              <?php
+              $tmpdate=strtotime($vo['Mdate']);
+              $tmpdate=floor((int)($tmpdate/(24*60*60)));
+              if($tmpdate>$datefrom){
+                echo '<li><div class="timeLine"><strong>'.date('Y-m-d',strtotime($vo['Mdate'])).'</strong></div></li>';
+              $datefrom=$tmpdate;
+              }
+              ?>
+              {if condition='$vo["Mtouid"] eq $uid'}
+              <li class="you ">
+                <div class="chat_avata">
+                  <a href='javascript:void(0)' >
+                    <img width="40" height="40" class="img_border_one" src="__PUBLIC__/upimages/{$admin.Uimg}" />
+                  </a>
+                </div>
+                <div class="a_msg_info" id="15000">
+                  <pre>{$vo.Mdesc}</pre>
+                  <i class="arrow_left_b"></i>
+                </div>
+                <small class="time">{$vo.Mdate}</small>
+              </li>
+              {else /}
+			   <li class="me">
+                <div class="chat_avata">
+                  <a target="_blank" href="/space/u/uid/115459">
+                    <img width="40" height="40" class="img_border_one" src="__PUBLIC__/upimages/{$userinfo.Uimg}" />
+                  </a>
+                </div>
+                <div class="a_msg_info" id="25680">
+                  <pre>{$vo.Mdesc}</pre>
+                  <i class="arrow_left_b"></i>
+                </div>
+                <small class="time">{$vo.Mdate}</small>
+              </li>
+              </if>
+              {/volist}
+            </ul>
+          </div>
+          <div id="chat_editor">
+            <table cellpadding="0" cellspacing="0">
+              <tbody>
+                <tr>
+                  <th>
+                    <div class="attach">
+                      <a id="sendEmojiIcon" href="javascript:void(0)" onclick="return false" title="表情" style="margin-top:0">表情</a>
+                    </div>
+                  </th>
+                  <th>
+                    <div style="position:relative;width:332px;margin-top:8px;">
+                      <textarea class="chatInput" id="textInput" type="text" style="height: 28px; overflow-y: hidden;"></textarea>
+                      <div id="msg_upImg_box" style="height:62px;display:none">
+                      </div>
+                    </div>
+                  </th>
+                  <th>
+                    <a class="chatSend btn btn-large btn-green" href="javascript:;" id="send_message">发送</a>
+                  </th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+   </body>
+</html>

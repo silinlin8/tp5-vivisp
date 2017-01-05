@@ -1,0 +1,238 @@
+{extend name="enroll/infoBase" /}
+{block name="form-area"}
+	{empty name="data"}
+		<form method="post" action="__ROOT__/index.php/Exam/Enroll/acceptProfile" enctype="multipart/form-data" id="form">
+		{else /}
+		<form method="post" action="__ROOT__/index.php/Exam/Enroll/saveProfile" enctype="multipart/form-data" id="form">
+	{/empty}	
+		<div class="prompt-area">
+			基本信息
+		</div>
+		<div class="basic-info">
+			<div class="column">
+				<span class="info-area">
+					<label class="label-area">
+						姓名：
+					</label>
+					{$data.realname}
+				</span>
+				<span class="info-area">
+					<label class="label-area">
+						身份证号码：
+					</label>
+					{$data.identity}
+				</span>
+				<span class="info-area">
+					<label class="label-area">
+						<span class="red-font">*</span>
+						籍贯：
+					</label>
+					<input type="text" class="column-input" name="nativeburn" value="{$data.nativeburn}" />
+					<p class="attention-area">
+						填写到地市，如：山东省济南市
+					</p>
+				</span>
+				<span class="info-area" id="burn-address">
+					<label class="label-area">
+						<span class="red-font">*</span>
+						生源地：
+					</label>
+					<select class="info-select" name="province" id="burn-province">
+						{empty name="data.province"}
+							<option value="0">请选择</option>
+						{/empty}	
+						{volist name="province" id="province"}
+							<option value="{$province.Pcode}" {if condition="$data['province'] eq $province['Pcode']"}selected{/if}>{$province.Pname}</option>
+						{/volist}
+					</select>
+					{empty name="data.city"}
+						<select class="info-select" name="city" id="burn-city">
+							<option value="0">请选择</option>
+						</select>
+						{else /}
+						<select class="info-select" name="city" id="burn-city" style="display: inline-block;">
+							{volist name="city" id="c"}
+								<option value="{$c.Ccode}" {if condition="$data['city'] eq $c['Ccode']"}selected{/if}>{$c.CName}</option>
+							{/volist}
+						</select>
+					{/empty}
+					{empty name="data.town"}
+						<select class="info-select" name="town" id="burn-town">
+							<option value="0">请选择</option>
+						</select>
+						{else /}
+						<select class="info-select" name="town" id="burn-town" style="display: inline-block;">
+							{volist name="town" id="t"}
+								<option value="{$t.Tcode}" {if condition="$data['town'] eq $t['Tcode']"}selected{/if}>{$t.TName}</option>
+							{/volist}
+						</select>
+					{/empty}
+					<p class="attention-area" id="sign-node">
+						1、请填写高考前户口所在地
+					</p>
+					<p class="attention-area">
+						2、曾经参加过工作的，请填写工作时户口所在地
+					</p>
+					<p class="attention-area">
+						3、不要填写学校户口所在地
+					</p>
+				</span>
+				<span class="info-area">
+					<label class="label-area">
+						<span class="red-font">*</span>
+						(预计)毕业时间：
+					</label>
+					<input type="date" name="gradtime" value="{$data.gradtime}" />
+				</span>
+				<span class="info-area">
+					<label class="label-area">
+						<span class="red-font">*</span>
+						身高(cm)：
+					</label>
+					<input type="text" name="height" class="column-input" placeholder="如：178" value="{$data.height}" />
+				</span>
+				<span class="info-area">
+					<label class="label-area">
+						<span class="red-font">*</span>
+						民族：
+					</label>
+					<select class="info-select" name="nation">
+						{empty name="data.nation"}
+							<option value="0">请选择</option>
+						{/empty}
+						{volist name="nation" id="nation"}
+							<option value="{$nation.id}" {if condition="$data['nation'] eq $nation['id']"}selected{/if}>{$nation.nation}</option>
+						{/volist}
+					</select>
+				</span>
+				<span class="info-area">
+					<label class="label-area">
+						健康情况:
+					</label>
+					<span class="red-font">是否健康</span>
+					{if condition="$data['fit'] eq 1"}
+						<input type="radio" name="fit" value="1" checked />是
+						<input type="radio" name="fit" value="0" />否
+					{else /}
+						<input type="radio" name="fit" value="1" />是
+						<input type="radio" name="fit" value="0" checked />否	
+					{/if}
+				</span>
+			</div>
+			<div class="column">
+				<span class="info-area">
+					<label class="label-area">
+						性别：
+					</label>
+					{$data.sex}
+				</span>
+				<span class="info-area">
+					<label class="label-area">
+						生日：
+					</label>
+					{$data.birthday}
+				</span>
+				<span class="info-area">
+					<label class="label-area">
+						<span class="red-font">*</span>
+						政治面貌：
+					</label>
+					<select class="info-select" name="political">
+						{empty name="data.political"}
+							<option value="0">请选择</option>
+						{/empty}
+						{volist name="political" id="vo"}
+							<option value="{$vo.id}" {if condition="$data['political'] eq $vo['id']"}selected{/if}>{$vo.type}</option>
+						{/volist}
+					</select>
+				</span>
+				<span class="info-area" id="graduateType">
+					<label class="label-area">
+						<span class="red-font">*</span>
+						毕业生类型：
+					</label>
+					<select class="info-select" name="gradtype">
+						{empty name="data.gradtype"}
+							<option value="0">请选择</option>
+						{/empty}
+						<option value="1" {if condition="$data['gradtype'] eq 1"}selected{/if}>国内毕业生</option>
+						<option value="2" {if condition="$data['gradtype'] eq 2"}selected{/if}>国(境外)毕业生</option>
+					</select>
+				</span>
+				<span class="info-area">
+					<label class="label-area">
+						<span class="red-font">*</span>
+						体重：
+					</label>
+					<input type="text" name="weight" class="column-input" placeholder="如：70" / value="{$data.weight}">
+				</span>
+				<span class="info-area">
+					<label class="label-area">
+						<span class="red-font">*</span>
+						婚姻状况：
+					</label>
+					<select class="info-select" name="marry">			
+						{empty name="data.marry"}
+							<option value="0">请选择</option>
+						{/empty}
+						{volist name="marry" id="marry"}
+							<option value="{$marry.id}" {if condition="$data['marry'] eq $marry['id']"}selected{/if}>{$marry.type}</option>
+						{/volist}
+					</select>
+				</span>
+			</div>
+			<div class="column">
+				<div class="upload-area">
+					{empty name="data.photo"}
+						<img src="__PUBLIC__/images/me_icon_04.gif" id="personPhoto">
+						{else /}
+						<img src="{$data.photo}" id="personPhoto">
+					{/empty}
+					<input type="file" name="photo" style="display:none;" id="upload-img" />
+					<button id="upload">立即上传照片</button>
+				</div>
+			</div>
+		</div>
+		<div class="prompt-area">
+			联系方式
+		</div>
+		<div class="concat-ways">
+			<span class="profile-form-span">
+				<label><span class="red-font">*</span>手机号码:</label>
+				<input type="text" name="mobile" id="mobile" value="{$data.mobile}" />
+				<p class="attention-area">
+					1、手机与固定电话至少填写一个
+				</p>
+				<p class="attention-area">
+					2、手机号码为后续应聘活动的重要联系方式之一，请谨慎填写
+				</p>
+			</span>	
+			<span class="profile-form-span">
+				<label><span class="red-font">*</span>固定电话：</label>
+				<input type="text" name="phone" id="phone" value="{$data.phone}" />
+				<p class="attention-area">
+					固定电话,例如:010-88888888
+				</p>
+			</span>
+			<span class="profile-form-span">
+				<label><span class="red-font">*</span>电子邮箱:</label>
+				<input type="text" name="email" id="email" value="{$data.email}" />
+				<p class="attention-area">
+					请填写常用邮箱，将用于找回密码
+				</p>
+			</span>
+			<span class="profile-form-span">
+				<label><span class="red-font">*</span>通信地址:</label>
+				<input type="text" name="address" id="address" value="{$data.address}" />
+			</span>
+			<span class="profile-form-span">
+				<label><span class="red-font">*</span>邮政编码:</label>
+				<input type="text" name="postkod" id="postalcode" value="{$data.postkod}" />
+			</span>
+		</div>
+		<button id="save" type="submit">保存</button>
+		<button id="next" type="submit">下一步</button>
+	</form>
+	<!-- <img src="{$imgsrc}"> -->
+	<script type="text/javascript" src="__PUBLIC__/js/profile.js"></script>
+{/block}

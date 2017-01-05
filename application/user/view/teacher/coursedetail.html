@@ -1,0 +1,277 @@
+<include file='Public:LessonHeader' />
+    <link rel="shortcut icon" href="__PUBLIC__/images/favicon.ico" />
+    <link rel="stylesheet" href="__PUBLIC__/style/teacher.css"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/style/upload.css"/>
+    <link rel="stylesheet" href="__PUBLIC__/video/video-js.css" />
+    <script type="text/javascript" src="__PUBLIC__/js/teacher.js"></script>
+    <div id="main" class="cd_main">
+     <div class="course_name_wrap">
+       课程名称:<input id="Cpid" type="hidden" value="{$cInfo.Lid}" />
+       <p class="course_name">{$cInfo.Ltitle}</p>
+       <em title="编辑课程名称" class="edit_coursename edit_icon"></em>
+     </div>
+      <div class="cd_left clearfix">
+        <div class="course_list">
+        <volist name='chapterlist' id='vo' >
+          <div class="chapter_item" id="{$vo.Lid}">
+            <h3>
+              <span class="updown" onselectstart="return false;">+</span>
+              <strong>
+              <i class="hasOpen"></i>第<span class="cnum">{$i}</span>章 <span class="ch_na">{$vo.Ltitle|getSubstr=###,10}</span>
+              <input type="hidden" value="{$vo.Ltitle}">
+              </strong>
+            </h3>
+            <div class="ch_intro">
+            <span class="cme">{$vo.Ldesc|getSubstr=###,15}</span>
+            <input type="hidden" value="{$vo.Ldesc}" id="desc">
+            <em class="edit_icon edit_ch"></em>
+            <em id="{$vo.Lid}" class="delete_icon delete_chapter"></em>
+            </div>
+            <ul class="abridge_list">
+              <li class="add_abridge J_add_abridge">添加一节</li>
+            </ul>
+          </div>
+        </volist>
+        <div class="add_chapter J_add_chapter">添加一章</div>
+        </div>
+      </div>
+      <div class="cd_right clearfix">
+        <div class="cdrl">
+          <div class="cdtl_main">
+            <p class="path">所在位置：<span class="ch_name">{$cCategory.Cname}</span><span class="path_icon">&gt;</span>
+            <span class="current_ab">{$cInfo.Ltitle}</span></p>
+            <div class="ab_info"> <!--课程节-->
+            <input id="course_jie_id" type="hidden" value="{$fjie.Lid}" />
+              <div class="ab_wrap ab1">
+                <h3>课程名称</h3>
+                <div class="ab_indent">
+                  <p class="ab_name">{$fjie.Ltitle}</p>
+                  <em title="编辑课程名称" class="edit_abname edit_icon">
+                  </em>
+                  <em title="删除该节课程" class="delete_icon delete_abridge"></em>
+                </div>
+              </div>
+              <div class="ab_wrap ab_time">
+                <h3>课程时长<small>&nbsp;单位:分钟</small></h3>
+                <div class="ab_indent">
+                  <p class="ab_summary ab_time">{$fjie.Ltime}</p>
+                  <em title="修改该节分钟" class="edit_ctime edit_icon"></em>
+                </div>
+              </div>
+              <div class="ab_wrap ab_beans">
+                <h3>课程积分<small>&nbsp;单位:个</small></h3>
+                <div class="ab_indent">
+                  <p class="ab_summary ab_beans">{$fjie.Lbeans}</p>
+                  <em title="修改该节积分" class="edit_cbeans edit_icon"></em>
+                </div>
+              </div>
+              <div class="ab_wrap ab2">
+                <h3>课程概述</h3>
+                <div class="ab_indent">
+                  <p class="ab_summary ab_desc">{$fjie.Ldesc}</p><em title="编辑该节概述" class="edit_absummary edit_icon"></em>
+                </div>
+              </div>
+              <div class="ab_wrap video_area">
+                <h3>上传视频</h3>
+                <div class="ab_indent">
+                  <form enctype="multipart/form-data" id="video_upform" name="video_upform" method="post">
+                    <a href="javascript:void(0)" class="upload_video"><span>选择视频</span></a>
+                    <input name="video_upfile" id="upfile_video" maxlength="20" size="40" type="file" style="display: none" />
+                    <input name="video_upmit" type="submit" id="video_upmit" value="上传" style="display: none" />
+                  </form>
+                  <div class="progress"><!--进度条-->
+                    <span class="bar"></span><span class="percent">0%</span >
+                  </div>
+                </div>
+              </div>
+              <div class="ab_wrap video_show">
+                <h3>视频预览</h3>
+                <div class="ab_indent">
+                 <notempty name="fjie['Limage']">
+                  <video id="ab_video" class="video-js vjs-default-skin" width="600" height="250" poster="__PUBLIC__/images/Course.jpg" data-setup='{"controls": true, "autoplay": false, "preload": "auto" }'>
+                    <source id="video_src" src="/Public/videoSource/videoSource/{$fjie.Limage}" type='video/mp4' />
+                  </video>
+                  <else/>
+                  <div class="none_video">暂无视频</div>
+                  </notempty>
+                </div>
+              </div>
+              <div class="ab_wrap student_area">
+                <h3>
+                  学生学习情况
+                  <!--<a href="__APP__/Teacher/lookstudent?course_id={$cInfo.Lid}">查看</a>-->
+                  <a href="javascript:void(0);" class="look_allstudent">展开</a>
+                </h3>
+                <div class="ab_indent">
+                  <ul class="student_list as_unactive">
+                  </ul>
+                  <p class="none_student">还没有学生学习该节哦！</p>
+                </div>
+              </div>
+            </div> <!--课程节-->
+          </div>
+        </div>
+        <div class="cdrr">
+          <div class="tdcourse_intro">
+            <h3>课程简介</h3>
+            <div class="tdrr_main">
+              <div class="c_intro"><span class="c_introcontent">{$cInfo.Ldesc}</span><em title="编辑课程简介" class="edit_courseintro edit_icon"></em></div>
+            </div>
+          </div>
+          <div class="tdcourse_time">
+            <h3>总课时</h3>
+            <div class="tdrr_main">
+              <div class="c_time">
+                <span class="c_timecontent">{$cInfo.Ltime}</span><em class="edit_icon edit_coursetime"></em>
+              </div>
+            </div>
+          </div>
+          <div class="tdcourse_level">
+            <h3>学段</h3>
+            <div class="tdrr_main">
+              <div class="c_level">
+                <span class="c_levelcontent">
+                <if condition='$vo["Ldifficulty"] eq 0'>初级
+                <elseif condition='$vo["Ldifficulty"] eq 1'/>中级
+                <else/>高级
+                </if>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="tdcourse_cate">
+            <h3>分类</h3>
+            <div class="tdrr_main">
+              <div class="c_cate">
+                <span class="c_catecontent">{$cCategory['Cname']}</span>
+              </div>
+            </div>
+          </div>
+          <div class="tdcourse_cover">
+            <h3>课程封面图</h3>
+            <div class="tdrr_main">
+              <img src="__PUBLIC__/upclassimages/{$cInfo.Limage}" class="coursecover" />
+              <form enctype="multipart/form-data" id="sky_upform" name="sky_upform"  method="post">
+                <a href="javascript:void(0)" class="cover_btn">上传封面图</a>
+                <input name="upfile" id="upfile" maxlength="20" size="40" type="file" value="" style="display: none"/>
+                <input name="upmit" type="submit" id="cover_upmit" value="上传" style="display: none"/>
+              </form>
+            </div>
+          </div>
+          <div class="tdcourse_upload">
+            <h3>课程相关资料</h3>
+            <div class="tdrr_main">
+              <form enctype="multipart/form-data" id="file_upform" name="file_upform" method="post">
+                <a href="javascript:void(0)" class="upload_btn">上传资料</a>
+                <input name="up_file" id="up_file" maxlength="20" size="40" type="file" value="" style="display:none"/>
+                <input name="upmit" type="submit" id="file_upmit" value="上传" style="display:none"/>
+              </form>
+              <notempty name="cInfo.Lcfile">
+                <div class="coursefile">
+                  <div>
+                     <h5><img src="/Public/images/dl_icon1.png" class="dl dlcon"><a class="dl" href="__APP__\User\Public\uploadSource\{$cInfo.Lcfile}">查看资料</a></h5>  
+                  </div>
+                </div>
+              </notempty>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="add_chapter_layer">
+      <div class="rl-header">
+        <button type="button" class="rl-close J-close-chapter" >×</button>
+        <h3>创建第<span class="chapter_num">1</span>章</h3>
+      </div>
+      <div class="create_course_main">
+        <div class="cc-wrap">
+          <label class="label-name" for="chapter_name">章名</label>
+          <div class="cc-group">
+            <input id="chapter_name" type="text" autocomplete="off" class="cc-input" placeholder="请输入章名">
+            <p class="cc-tip-wrap"></p>
+          </div>
+        </div>
+        <div class="cc-wrap">
+          <label class="label-name" for="nick">概述</label>
+          <div class="cc-group">
+          <textarea id="chapter_sum" type="text" autocomplete="off" class="cc_textarea" placeholder="请输入概述"></textarea>
+            <p class="cc-tip-wrap"></p>
+          </div>
+        </div>
+        <div class="wlfg-wrap">
+          <div class="rlf-group">
+            <span id="create_chapter_btn" hidefocus="true" aria-role="button" class="rlf-btn-green btn-block create_submit">创建章</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="modify_chapter_layer">
+      <div class="rl-header">
+        <button type="button" class="rl-close J-close-modify" >×</button>
+        <h3>修改第<span class="chap_num"></span>章</h3>
+      </div>
+      <div class="create_course_main">
+        <div class="cc-wrap">
+          <label class="label-name" for="chapter_name">章名</label>
+          <div class="cc-group">
+            <input id="modify_chname" type="text" autocomplete="off" class="cc-input" placeholder="请输入章名">
+            <p class="cc-tip-wrap"></p>
+          </div>
+        </div>
+        <div class="cc-wrap">
+          <label class="label-name" for="nick">概述</label>
+          <div class="cc-group">
+          <textarea id="modify_chsum" type="text" autocomplete="off" class="cc_textarea" placeholder="请输入概述">
+          </textarea>
+            <p class="cc-tip-wrap"></p>
+          </div>
+        </div>
+        <div class="wlfg-wrap">
+          <div class="rlf-group">
+            <span id="modify_chbtn" hidefocus="true" aria-role="button" class="rlf-btn-green btn-block modify_submit">保存</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="add_abridge_layer">
+      <div class="rl-header">
+        <button type="button" class="rl-close J-close-abridge" >×</button>
+        <h3>创建<span class="abdge-num"></span>节微课</h3>
+      </div>
+      <div class="create_course_main">
+        <div class="cc-wrap">
+          <label class="label-name" for="chapter_name">微课名</label>
+          <div class="cc-group">
+            <input id="jie_name" type="text" autocomplete="off" class="cc-input" placeholder="请输入节名" />
+            <p class="cc-tip-wrap"></p>
+          </div>
+        </div>
+        <div class="cc-wrap">
+          <label class="label-name" for="nick">时长</label>
+          <div class="cc-group">
+            <input id="course_time" type="text" autocomplete="off" class="cc-input" placeholder="请输入时长">
+            <p class="cc-tip-wrap"></p>
+          </div>
+        </div>
+        <div class="cc-wrap">
+          <label class="label-name" for="nick">积分</label>
+          <div class="cc-group">
+            <input id="course_bean" type="text" autocomplete="off" class="cc-input" placeholder="请输入所需积分">
+            <p class="cc-tip-wrap"></p>
+          </div>
+        </div>
+        <div class="cc-wrap">
+          <label class="label-name" for="nick">概述</label>
+          <div class="cc-group">
+            <textarea id="jie_desc" type="text" autocomplete="off" class="cc_textarea" placeholder="请输入概述"></textarea>
+            <p class="cc-tip-wrap"></p>
+          </div>
+        </div>
+        <div class="wlfg-wrap">
+          <div class="rlf-group">
+            <span id="create_abridge_btn" hidefocus="true" aria-role="button" class="rlf-btn-green btn-block create_submit">创建微课</span>
+          </div>
+        </div>
+      </div>
+    </div>
+<include file="../application/common/view/Footer.html" />

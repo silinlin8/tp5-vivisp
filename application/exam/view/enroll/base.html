@@ -1,0 +1,16 @@
+{empty name="uid"}
+	{include file="../application/common/view/IndexHeader.html" /}
+	{else /}
+	{include file="../application/common/view/Header.html" /}
+{/empty}
+<head>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/style/enroll-main.css" />
+	<script type="text/javascript" src="__PUBLIC__/js/verify.js"></script>
+</head>
+{block name="main"}
+{/block}
+{empty name="uid"}
+	{include file="../application/common/view/IndexFooter.html" /}
+	{else /}
+	{include file="../application/common/view/Footer.html" /}
+{/empty}

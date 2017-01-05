@@ -1,0 +1,297 @@
+{extend name="enroll/infoBase" /}
+{block name="form-area"}
+	{empty name="data"}
+		<form method="post" action="__ROOT__/index.php/Exam/Enroll/addabi" enctype="multipart/form-data" id="form">
+		{else /}
+		<form method="post" action="__ROOT__/index.php/Exam/Enroll/saveabi" enctype="multipart/form-data" id="form">
+	{/empty}
+	<div class="prompt-area">
+		外语能力
+	</div>
+	<div class="edu-info" >
+	<a href="javascript:void(0);" onclick="showarea('Landiv')">
+		<img src="__PUBLIC__/images/new-add.gif" style="padding: 10px;">
+	</a>
+	<div style="display: none;" id="Landiv">
+	<a href="javascript:void(0);" onclick="hidearea('Landiv')" class="hidebutton">
+		<img src="__PUBLIC__/images/hide.gif">
+	</a>
+	<table class="tab-info">
+		<tr class="tr-line">
+			<td class="tab-left">
+				<span class="red-font">*</span>语种名称:
+			</td>
+			<td class="tab-right">
+				<select class="selLen" name="languagename">
+					{empty name="languagename"}
+						<option selected="selected">请选择</option>
+					{/empty}
+					{volist name="language_name" id="language_name"}
+						<option value="{$language_name.type}" {if condition="$data['languagename'] eq $language_name['type']"}selected{/if}>{$language_name.type}</option>
+					{/volist}
+				</select>
+			</td>
+		</tr>
+		<tr class="tr-line">
+			<td class="tab-left">
+				<span class="red-font">*</span>外语水平级别:
+			</td>
+			<td class="tab-right">
+				<select class="selLen" name="languagelevel">
+					{empty name="languagelevel"}
+					<option selected="selected">请选择</option>
+					{/empty}
+					{volist name="language_level" id="language_level"}
+						<option value="{$language_level.type}" {if condition="$data['languagelevel'] eq $language_level['type']"}selected{/if}>{$language_level.type}</option>
+					{/volist}
+				</select>
+			</td>
+			<td class="especial-matter">
+				外语水平级别为大学英语四级、大学英语六级、英语专业四级及英语专业八级时，成绩及其证书编号必须填写
+			</td>
+		</tr>
+		<tr class="tr-line">
+			<td class="tab-left">
+				<span class="red-font">*</span>熟练程度:
+			</td>
+			<td class="tab-right">
+				<select class="selLen" name="skilllevel">
+					{empty name="skilllevel"}
+						<option selected="selected">请选择</option>
+					{/empty}
+					{volist name="skill_level" id="skill_level"}
+						<option value="{$skill_level.type}" {if condition="$data['skilllevel'] eq $skill_level['type']"}selected{/if}>{$skill_level.type}</option>
+					{/volist}
+				</select>
+			</td>
+		</tr>
+		<tr class="tr-line">
+			<td class="tab-left">
+				<span class="red-font">*</span>证书获得时间:
+			</td>
+			<td class="tab-right">
+				<input type="date" name="diplomatime" value="{$data.diplomatime}" class="selLen"></input>
+			</td>
+		</tr>
+		<tr class="tr-line">
+			<td class="tab-left">
+				<span class="red-font">*</span>认证机构:
+			</td>
+			<td class="tab-right">
+				<input type="text" name="certificationbody" value="{$data.certificationbody}" class="mesInput"></input>
+				<label class="metter-color label-position left-control">认证机构名称在20个汉字以内</label>
+			</td>
+		</tr>
+		<tr class="tr-line">
+			<td class="tab-left">
+				<span>成绩:</span>
+			</td>
+			<td class="tab-right">
+				<input type="text" name="record" value="{$data.record}" class="mesInput"></input>
+			</td>
+		</tr>
+		<tr class="tr-line">
+			<td class="tab-left">
+				<span>证书编号:</span>
+			</td>
+			<td class="tab-right">
+				<input type="text" name="certificatenumber" value="{$data.certificatenumber}" class="mesInput"></input>
+			</td>
+		</tr>
+		<tr class="tr-line">
+			<td class="tab-left">
+				<span>上传证书或成绩单:</span>
+			</td>
+			<td class="tab-right">
+				<input type="file" name="diplomaphoto"  value="{$data.diplomaphoto}"></input>
+				<label class="metter-color label-position left-control">文件类型为[pdf,doc,xls,jpg,png,docx,xlsx]其中之一,大小在1024K之内</label>
+			</td>
+		</tr>
+		<tr class="tr-line">
+				<td class="tab-left">
+					<span>备注:</span>
+				</td>
+				<td class="tab-right">
+					<textarea class="remarkPosit" name="remark">{$data.remark}</textarea>
+					<label class="metter-color remark-position">50个汉字以内</label>
+				</td>
+			</tr>
+	</table>
+	<div class="savearea">
+		<button type="submit" class="savebutton">保存</button>
+	</div>
+	</div>
+	</div>
+	<div class="prompt-area">
+		计算机能力
+	</div>
+	<div class="edu-info" >
+	<a href="javascript:void(0);" onclick="showarea('Comdiv'),addhei(1);">
+		<img src="__PUBLIC__/images/new-add.gif" style="padding: 10px;">
+	</a>
+	<div style="display: none;" id="Comdiv">
+		<a href="javascript:void(0);" onclick="hidearea('Comdiv'),minhei(3);" class="hidebutton">
+			<img src="__PUBLIC__/images/hide.gif">
+		</a>
+		<table class="tab-info">
+			<tr class="tr-line">
+				<td class="tab-left">
+					<span class="red-font">*</span>证书名称:
+				</td>
+				<td class="tab-right">
+					<input type="text" name="certificatea" value="{$data.certificatea}" class="selLen"></input>
+				</td>
+			</tr>
+			<tr class="tr-line">
+				<td class="tab-left">
+					<span class="red-font">*</span>证书获得时间:
+				</td>
+				<td class="tab-right">
+					<input type="text" name="certificateatime" value="{$data.certificateatime}" class="selLen"></input>
+				</td>
+			</tr>
+			<tr class="tr-line">
+				<td class="tab-left">
+					<span class="red-font">*</span>发证单位:
+				</td>
+				<td class="tab-right">
+					<input type="text" name="issuea" value="{$data.issuea}" class="selLen"></input>
+					<label class="metter-color label-position left-control">发证单位名称在20个汉字以内</label>
+				</td>
+			</tr>
+			<tr class="tr-line">
+				<td class="tab-left">
+					<span>级别:</span>
+				</td>
+				<td class="tab-right">
+					<input type="text" name="levela" value="{$data.levela}" class="selLen"></input>
+				</td>
+			</tr>
+			<tr class="tr-line">
+				<td class="tab-left">
+					<span>成绩:</span>
+				</td>
+				<td class="tab-right">
+					<input type="text" name="recorda" value="{$data.recorda}" class="selLen"></input>
+				</td>
+			</tr>
+			<tr class="tr-line">
+				<td class="tab-left">
+					<span>证书编号:</span>
+				</td>
+				<td class="tab-right">
+					<input type="text" name="certificatenumbera" value="{$data.certificatenumbera}" class="mesInput"></input>
+				</td>
+			</tr>
+			<tr class="tr-line">
+				<td class="tab-left">
+					<span>上传证书:</span>
+				</td>
+				<td class="tab-right">
+					<input type="file" name="diplomaphotoa" value="{$data.diplomaphotoa}"></input>
+					<label class="metter-color label-position left-control">文件类型为[pdf,doc,xls,jpg,png,docx,xlsx]其中之一,大小在1024K之内</label>
+				</td>
+			</tr>
+			<tr class="tr-line">
+				<td class="tab-left">
+					<span>备注:</span>
+				</td>
+				<td class="tab-right">
+					<textarea class="remarkPosit" name="remarka">{$data.remarka}</textarea>
+					<label class="metter-color remark-position">50个汉字以内</label>
+				</td>
+			</tr>
+		</table>
+		<div class="savearea">
+			<button type="submit" class="savebutton">保存</button>
+		</div>
+	</div>
+	</div>
+	<div class="prompt-area">
+		其他资格证书
+	</div>
+	<div class="edu-info" >
+	<a href="javascript:void(0);" onclick="showarea('Cerdiv')">
+		<img src="__PUBLIC__/images/new-add.gif" style="padding: 10px;">
+	</a>
+	<div style="display: none;" id="Cerdiv">
+		<a href="javascript:void(0);" onclick="hidearea('Cerdiv'),minhei(4)" class="hidebutton">
+			<img src="__PUBLIC__/images/hide.gif">
+		</a>
+		<table class="tab-info">
+			<tr class="tr-line">
+				<td class="tab-left">
+					<span class="red-font">*</span>证书名称:
+				</td>
+				<td class="tab-right">
+					<input type="text" name="certificateb" value="{$data.certificateb}" class="selLen"></input>
+				</td>
+			</tr>
+			<tr class="tr-line">
+				<td class="tab-left">
+					<span class="red-font">*</span>证书获得时间:
+				</td>
+				<td class="tab-right">
+					<input type="date" name="certificatebtime" value="{$data.certificatebtime}" class="selLen"></input>
+				</td>
+			</tr>
+			<tr class="tr-line">
+				<td class="tab-left">
+					<span class="red-font">*</span>发证单位:
+				</td>
+				<td class="tab-right">
+					<input type="text" name="issueb" value="{$data.issueb}" class="selLen"></input>
+					<label class="metter-color label-position left-control">发证单位名称在20个汉字以内</label>
+				</td>
+			</tr>
+			<tr class="tr-line">
+				<td class="tab-left">
+					<span>级别:</span>
+				</td>
+				<td class="tab-right">
+					<input type="text" name="levelb" value="{$data.levelb}" class="selLen"></input>
+				</td>
+			</tr>
+			<tr class="tr-line">
+				<td class="tab-left">
+					<span>成绩:</span>
+				</td>
+				<td class="tab-right">
+					<input type="text" name="recordb" value="{$data.recordb}" class="selLen"></input>
+				</td>
+			</tr>
+			<tr class="tr-line">
+				<td class="tab-left">
+					<span>证书编号:</span>
+				</td>
+				<td class="tab-right">
+					<input type="text" name="certificatenumberb" value="{$data.certificatenumberb}" class="mesInput"></input>
+				</td>
+			</tr>
+			<tr class="tr-line">
+				<td class="tab-left">
+					<span>上传证书:</span>
+				</td>
+				<td class="tab-right">
+					<input type="file" name="diplomaphotob" value="{$data.diplomaphotob}"></input>
+					<label class="metter-color label-position left-control">文件类型为[pdf,doc,xls,jpg,png,docx,xlsx]其中之一,大小在1024K之内</label>
+				</td>
+			</tr>
+			<tr class="tr-line">
+				<td class="tab-left">
+					<span>备注:</span>
+				</td>
+				<td class="tab-right">
+					<textarea class="remarkPosit" name="remarkb">{$data.remarkb}</textarea>
+					<label class="metter-color remark-position">50个汉字以内</label>
+				</td>
+			</tr>
+		</table>
+		<div class="savearea">
+			<button type="submit" class="savebutton">保存</button>
+		</div>
+	</div>
+	</div>
+</form>
+<script type="text/javascript" src="__PUBLIC__/js/ability.js"></script>
+{/block}

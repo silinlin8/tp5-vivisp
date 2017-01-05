@@ -1,0 +1,163 @@
+{empty name="uid" }
+    {include file='../application/common/view/IndexHeader.html' /}
+    {else/}
+    {include file='../application/common/view/Header.html' /}
+{/empty}
+<head>
+  <title>{$cInfo.Ltitle}笔记_学吧网</title>
+  <script src="__PUBLIC__/js/progress.js" type="text/javascript"></script>
+  <script src="__PUBLIC__/js/learn.js"></script>
+</head>
+    <div id="main" class="tranmain">
+    <input id="course_id" type="hidden" value="{$cInfo.Lid}" />
+      <div class="container1000" id="page_course_note">
+        <div class="course_nav">
+          <div id="page_header">
+            <h1>{$cLabel}：{$cInfo.Ltitle} </h1>
+            <div id="share" class="fr">
+              <div class="bdsharebuttonbox bdshare-button-style2-16" data-bd-bind="1399774838364">
+                <a href="#" class="bds_more" data-cmd="more"></a>
+                <a title="分享到QQ空间" href="#" class="bds_qzone" data-cmd="qzone"></a>
+                <a title="分享到新浪微博" href="#" class="bds_tsina" data-cmd="tsina"></a>
+                <a title="分享到腾讯微博" href="#" class="bds_tqq" data-cmd="tqq"></a>
+                <a title="分享到人人网" href="#" class="bds_renren" data-cmd="renren"></a>
+              </div>
+             </div>
+          </div>
+          <div class="picture">
+            <a href="__APP__/Index/Index/view?Cid={$cInfo.Lid}">
+              <img src="__PUBLIC__/upclassimages/{$cInfo.Limage}" width="280" height="160" title="{$cInfo.Ltitle}" alt="{$cInfo.Ltitle}">
+            </a>
+          </div>
+          <div class="info">
+            <ul>
+              <li>
+                <div class="info_title">参加人数</div>
+                <div class="info_num">
+                  <i>{$num}</i>
+                </div>
+              </li>
+              <li>
+                <div class="info_title">课程时长</div>
+                <div class="info_num"><i>{$cInfo.Ltime}</i>分钟</div>
+              </li>
+              <li>
+                <div class="info_title">已学时长</div>
+                <div class="info_num">
+                  <i>{$studytime}</i>分
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="study_status">
+            <ul>
+              <li class="br1">
+                <div class="info_title">学习进度</div>
+                <div class="info_num"><i>{$zj}</i></div>
+              </li>
+              <li>
+                <a id="start-btn" href="__APP__/Index/Index/video?vid={$fcid}">开始学习</a>
+              </li>
+            </ul>
+          </div>
+          <div id="course-progress">
+            <progress id="p1" max="100" value="{$jdt}" style="width: 700px;">
+            </progress>
+            <div id="learn-tips" style="left: {$jdt}%; display: none;">
+              学习完成度
+              <i>{$jdt}%</i>
+            </div>
+          </div>
+        </div>
+        <div class="content_area">
+          <ul class="course-menu clearfix">
+            <li>
+              <a id="learnOn" href="__APP__/Index/Index/learn?Cid={$cInfo.Lid}"><span>学习</span></a>
+            </li>
+            <li>
+              <a id="noteOn" href="javascript:void(0)" class="ui-tabs-active"><span>笔记</span></a>
+            </li>
+          </ul>
+          <div id="course_note">
+            {empty name='notes'}
+              <div class="unnote">
+                <span></span>
+                <p>此课程暂无同学记录过笔记</p>
+              </div>
+            {else /}
+              <ul>
+                {volist name='notes' id='vo'}
+                  <li id="{$vo.Nid}">
+                    <div class="notelist_headpic">
+                      <!-- <a href="__APP__/Index/video?Cid={$cInfo.Lid}"><img src="__PUBLIC__/upimages/{$vo.Uimg}" width="40" height="40"></a> -->
+                      <a href="##"><img src="__PUBLIC__/upimages/{$vo.Uimg}" width="40" height="40"></a>
+                    </div>
+                    <div class="notelist_content">
+                      <div class="u_name">
+                        <!-- <a href="__APP__/User/index?Uid={$vo.Nuid}">{$vo.Uname}</a> -->
+                        <a href="##">{$vo.Uname}</a>
+                      </div>
+                      <p>{$vo.Ndesc}</p>
+                      <div class="notelist-bottom clearfix">
+                        <span title="<?php echo floor((time()-strtotime($vo['Ndate']))/(3600*24)); ?>天前" class="fl timeago"><?php echo floor((time()-strtotime($vo['Ndate']))/(3600*24));  ?>天前</span>
+                        <div class="notelist-actions">
+                          <a href="__APP__/Index/Index/video?Vid={$vo.Nlid}" class="color-gray p15 <if condition='$vo.Nuid eq $uid'>on</if>">{$vo.Ltitle}</a>
+                          <a title="采集" href="javascript:void(0);" class="Jcollect list-praise <if condition='$vo.Nuid eq $uid'>on</if> " data-mid="987|114539">
+                          <span class="icon icon_collection "></span>
+                          <!--<em>0</em>--></a>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                {/volist}
+              </ul>
+            {/empty}
+          </div>
+        </div>
+        <div class="sidebar">
+          <dl>
+            <dt>授课老师</dt>
+            <dd>
+              <div class="course_teacher">
+                <a href="#" class="teacer_pic">
+                  <img src="__PUBLIC__/upimages/{$tInfo.Uimg}" width="80" height="80" />
+                </a>
+                <h3>
+                  <a href="#">{$tInfo.Uname}</a><!--__APP__/Tearcher/index?uid={$tInfo.Uid}-->
+                  <span class="teacher_icon"></span>
+                </h3>
+                <p>{$cLabel}</p>
+                <br class="clear" />
+                <div class="tec_discrip autowrap">{$tInfo.Udesc}</div>
+              </div>
+            </dd>
+          </dl>
+          <dl>
+            <dt>
+              <a href="javascript:void(0);" class="changeUser" title="换一组">换一组</a>
+              <span style="color:#be3948" class="snums">{$num}</span> 位共同战斗的同学
+            </dt>
+            <dd>
+              <ul class="users">
+              {volist name='learners' id='vo'}
+                 <li>
+                  <a href="__APP__/User/index?Uid={$vo.Uid}" title="访问个人空间">
+                  <img src="__PUBLIC__/upimages/{$vo.Uimg}" width="80" height="80" title="{$vo.Uname}" alt="{$vo.Uname}" /></a>
+                  <h3>
+                    <a href="__APP__/User/index?Uid={$vo.Uid}">{$vo.Uname}</a>
+                  </h3>
+                  <em>{$vo.Uclass}</em>
+                </li>
+              {/volist}
+              </ul>
+            </dd>
+          </dl>
+        </div>
+        <br class="clear" />
+      </div>
+    </div>
+{empty name="uid" }
+    {include file='../application/common/view/IndexFooter.html' /}
+    {else/}
+     {include file='../application/common/view/Footer.html' /}
+{/empty}

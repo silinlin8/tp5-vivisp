@@ -1,0 +1,122 @@
+<include file="Public/Header" />
+	<head>
+	  <link rel="stylesheet" href="__ROOT__/mdeditor/write/css/style.css" />
+	  <link rel="stylesheet" href="__ROOT__/mdeditor/css/editormd.css" />
+		<link rel="stylesheet" href="__ROOT__/mdeditor/write/css/my-style.css" />
+    <link rel="stylesheet" href="__ROOT__/Public/style/testpaper.css" />
+	</head>
+
+    <!-- md编译器 -->
+    <div class="test-editormd-box">
+      <div id="test-editormd"></div>
+    </div>
+    <div class="config">
+      <label>题目答案</label>
+      <input type="text" name="answer" placeholder="多选题以逗号隔开" class="ProConfig" id="answer" />
+      <label>题目类型</label>
+      <select id="type">
+        <option value="0">请选择</option>
+        <volist name="types" id="t">
+          <option value="{$t.id}">{$t.type}</option>
+        </volist>
+      </select>
+      <label>题目分数</label>
+      <select name="score" id="score">
+        <option value="0.5">0.5</option>
+        <option value="1">1</option>
+      </select>
+      <label>所属试卷</label>
+      <select name="paper" id="paper">
+        <option value="0">请选择</option>
+        <volist name="paper" id="p">
+          <option value="{$p.paper}">{$p.paper}</option>
+        </volist>
+      </select>
+      <button id="save" type="submit" class="Probtn">保存</button>
+    </div>
+    <input type="hidden" id="type" value="{$type}" />
+<script src="__ROOT__/mdeditor/write/js/jquery.min.js"></script>
+<script src="__ROOT__/mdeditor/editormd.js"></script>
+<script type="text/javascript">
+	// edtior.md 配置
+    var testEditor;
+    $(function() {
+      testEditor = editormd("test-editormd", {
+          width: "80%",
+          height: "80%",
+          path : "__ROOT__/mdeditor/lib/",
+          codeFold : true,
+          placeholder : "请输入试题（*必填,空一行填写）...",
+          saveHTMLToTextarea : true,    // 保存 HTML 到 Textarea
+          searchReplace : true,
+          htmlDecode : "style,script,iframe|on*",            // 开启 HTML 标签解析，为了安全性，默认不开启
+          hlight : false, // 关闭预览 HTML 的代码块高亮，默认开启
+          emoji : true,
+          taskList : true,
+          tocm            : true,         // Using [TOCM]
+          tex : true,                   // 开启科学公式TeX语言支持，默认关闭
+          flowChart : true,             // 开启流程图支持，默认关闭
+          sequenceDiagram : true,       // 开启时序/序列图支持，默认关闭,
+          //dialogLockScreen : false,   // 设置弹出层对话框不锁屏，全局通用，默认为true
+          //dialogShowMask : false,     // 设置弹出层对话框显示透明遮罩层，全局通用，默认为true
+          //dialogDraggable : false,    // 设置弹出层对话框不可拖动，全局通用，默认为true
+          //dialogMaskOpacity : 0.4,    // 设置透明遮罩层的透明度，全局通用，默认值为0.1
+          //dialogMaskBgColor : "#000", // 设置透明遮罩层的背景颜色，全局通用，默认为#fff
+          imageUpload : true,
+          imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+          imageUploadURL : "__ROOT__/mdeditor/write/php/upload.php?test=dfdf",
+      });
+      $("#preview-btn").bind('click', function() {
+          testEditor.previewing();
+      });
+    });
+		$("#save").click(function() {
+      var obj = verify();
+      if (obj) {
+        $.post(
+          './questionAdd',
+          obj,
+          function (data) {
+            if (data == 1) {
+              alert("添加成功!，可在本页继续添加");
+              testEditor.setValue("");
+              // window.location.href = "__ROOT__/index.php/Teacher/questype/type/" + $("#type").val() + ".html";
+            }
+            else{
+              alert("失败");
+            }
+          }
+        );
+      }
+		});
+    function verify () {
+      var str = $("#answer").val(),
+        type = $("#type").val(),
+        paper = $("#paper").val(),
+        content = testEditor.getValue();
+      if (content === "") {
+        layer.alert("请填写题目内容");
+        return false;
+      }
+      if (str.split(",").join(",") !== str || !str) {
+        layer.alert("请按照正确格式填写答案,如：A,B"); 
+        return false;
+      } 
+      if (type === '0') {
+        layer.alert("请选择题目类型");
+        return false;
+      }
+      if (paper === "0") {
+        layer.alert("请选择所属试卷");
+        return false;
+      }
+      return {
+        question: content,
+        answer: str,
+        grade: $("#score").val(),
+        type: $("#type").val(),
+        paper: $("#paper").val()
+      };
+    }
+</script>
+<include file="Public/Footer" />

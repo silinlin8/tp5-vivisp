@@ -1,0 +1,100 @@
+{extend name="enroll\infoBase" /}
+{block name="form-area"}
+	{empty name="data"}
+		<form method="post" action="__ROOT__/index.php/Exam/Enroll/addawa" enctype="multipart/form-data" id="form">
+		{else /}
+		<form method="post" action="__ROOT__/index.php/Exam/Enroll/saveawa" enctype="multipart/form-data" id="form">
+	{/empty}
+	<div class="prompt-area more-width">
+		获奖情况(非必填)
+	</div>
+	<div class="edu-info" >
+		<div class="remind-words">
+			请填写获得奖学金及评优情况。
+		</div>
+		<div id="paper" style="margin-top: 20px;">
+			<table class="tab-info">
+				<tr class="tr-line">
+					<td class="tab-left">
+						<span class="red-font">*</span>奖励名称:
+					</td>
+					<td class="tab-right">
+						<input type="text" name="rewardname" class="mesInput" value="{$data.rewardname}">
+					</td>
+				</tr>
+				<tr class="tr-line">
+					<td class="tab-left">
+						<span class="red-font">*</span>奖励级别:
+					</td>
+					<td class="tab-right">
+						<select class="selLen" name="rewardlevel">
+							{empty name="data"}
+								<option selected="selected">请选择</option>
+							{/empty}
+							{volist name="reward_level" id="reward_level"}
+								<option value="{$reward_level.type}" {if condition="$data['rewardlevel'] eq $reward_level['type']"}selected{/if}>{$reward_level.type}</option>
+							{/volist}
+						</select>
+					</td>
+				</tr>
+				<tr class="tr-line">
+					<td class="tab-left">
+						<span class="red-font">*</span>证书获得时间:
+					</td>
+					<td class="tab-right">
+						<input type="date" name="certificatetime" class="mesInput" value="{$data.certificatetime}" />
+					</td>
+				</tr>
+				<tr class="tr-line">
+					<td class="tab-left">
+						<span class="red-font">*</span>发证单位:
+					</td>
+					<td class="tab-right">
+						<input type="text" name="issueunit" class="mesInput" value="{$data.issueunit}" />
+					</td>
+				</tr>
+				<tr class="tr-line">
+					<td class="tab-left">
+						<span>证书编号:</span>
+					</td>
+					<td class="tab-right">
+						<input type="text" name="certificatenumber" class="mesInput" value="{$data.certificatenumber}" />
+					</td>
+				</tr>
+				<tr class="tr-line">
+					<td class="tab-left">
+						<span>上传证书:</span>
+					</td>
+					<td class="tab-right">
+						<span id="upload-span">
+							{empty name="data"}上传{else /}更改{/empty}证书
+						</span>
+						<strong id="show-name">{$data.oldname}</strong>
+						<input type="hidden" id="file-name" name="oldname" value="{$data.uploadcertificate}"  />
+						<input type="file" name="uploadcertificate" id="upload-area" value="{$data.uploadcertificate}" />
+						<label class="metter-color label-position left-control right-file">文件类型为[pdf,doc,xls,jpg,png,docx,xlsx]其中之一,大小为1024K之内</label>
+					</td>
+				</tr>
+				<tr class="tr-line">
+					<td class="tab-left">
+						<span>备注:</span>
+					</td>
+					<td class="tab-right">
+						<textarea class="remarkPosit" name="remark">{$data.remark}</textarea>
+						<label class="metter-color remark-position">50个汉字以内</label>
+					</td>
+				</tr>
+			</table>
+			<div class="savearea">
+				<button type="submit" class="savebutton">保存</button>
+			</div>
+		</div>
+	</div>
+	</form>
+	<script type="text/javascript" src="__PUBLIC__/js/upload.js"></script>
+	<script type="text/javascript">
+		$("#upload-span").click(function () {
+			$("#upload-area").click();
+		});
+	</script>
+{/block}

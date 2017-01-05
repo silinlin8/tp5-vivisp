@@ -1,0 +1,54 @@
+<include file="Public/Header" />
+<head>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/style/testpaper.css" />
+</head>
+<div class="paper-container">
+	<h2 class="all-paper">现共有试卷{$len}套,{$uselen}套可用</h2>
+	<div class="btns-area">
+		<a href="javascript: void(0);" id="add" class="btn-link">新增试卷</a>
+	</div>	
+	<table class="questions-show">
+		<thead class="show-papers">
+			<th>卷子编号</th>
+			<th>卷子现有题目</th>
+			<th>状态</th>
+			<th>操作</th>
+		</thead>
+		<tbody class="show-papers-main">
+			<volist name="data" id="vo">
+				<tr>
+					<td>{$vo.paper}</td>
+					<td>{$vo.count}</td>
+					<if condition="$vo['status'] eq 1">
+						<td>可用</td>
+						<td><a href="/index.php/Teacher/ban/id/{$vo.id}">禁用</a></td>
+						<else />
+						<td>不可用</td>
+						<td><a href="/index.php/Teacher/touse/id/{$vo.id}">启用</a></td>
+					</if>
+				</tr>
+			</volist>	
+		</tbody>
+	</table>
+</div>
+<input type="hidden" value="{$len}" id="len" />
+<script type="text/javascript">
+	$("#add").click(function () {
+		if (confirm("确定要新增试卷吗？")) {
+			$.post(
+				"addpaper",
+				{
+					paper: +($("#len").val()) + 1
+				},
+				function (data) {
+					if (data) {
+						alert("新增成功");
+						window.location.reload();
+					} else {
+						alert("服务器繁忙,请稍后再试");
+					}
+				}
+			)
+		}
+	});
+</script>

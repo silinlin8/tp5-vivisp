@@ -1,0 +1,70 @@
+{extend name="Public:UserIndexBlock" /}
+{block name="content"}
+          <div class="main-bd clearfix">
+            <div class="questiontag clearfix">
+              <div class="fr">
+                <select id="courseSelect" style="width:350px;">
+                  <option value="0" name="all">全部课程</option>
+                  {volist name='lessons' id='vo' key='k'}
+                    <option value="{$vo.Lid}" <if condition="$vo.Lid eq $lid"> selected="true"</if> >{$vo.Ltitle}</option>
+                  {/volist}
+                </select>
+              </div>
+              <a href="__APP__/User/User/note?type=0" {if condition='$type eq 0'}class="active"{/if} ><span>全部<em>{$notecount}</em></span></a>
+              <a href="__APP__/User/User/note?type=1" {if condition='$type eq 1'}class="active"{/if} ><span class="myself">自己<em> {$priNcount}</em></span></a>
+              <a href="__APP__/User/User/note?type=2" {if condition='$type eq 2'}class="active"{/if} ><span class="nonebroder others">采集<em>{$getNcount}</em></span></a>
+            </div>
+           {volist name='notes' id='vo' }
+            <div class="discuss" id="{$vo.Nid}">
+              <div class="discusslist">
+                <a href="javascript:void(0)" class="otherHead mynoteicon"></a>
+                <div class="detailmeg">
+                  <div class="report" data="0">
+                    <span>
+                      {empty name='vo["NSinfo"]'}
+                        <!--<a href="__APP__/User/index?uid={$vo.Nuid}" title="{$vo.Uname}" target="_blank">{$vo.Uname}</a>-->
+                        <a href="#" title="{$vo.Uname}">{$vo.Uname}</a>
+                        </span> <em>的笔记</em>
+                      {else /}
+                          <span>
+                          <em>我采集 </em>
+                          <a href="__APP__/User/User/index?uid={$vo.NSinfo.Nuid}" title="{$vo.NSinfo.Uname}" target="_blank">{$vo.NSinfo.Uname} </a>
+                          </span><em>的笔记</em>
+                      {/empty}
+
+                    <p class="mynote">{$vo.Ndesc}</p>
+                    <a href="javascript:void(0);" class="sava_btn"></a>
+                  </div>
+                  <p class="fbtime">时间：
+                  <span class="finaltime">
+                  <?php
+                   $time=(int)((time()-strtotime($vo['Ndate']))/60);
+                   if($time>1440){
+                    echo floor((int)($time/1440)).'天前';
+                   }elseif($time>60){
+                    echo floor((int)($time/60)).'小时前';
+                   }else{
+                    echo floor(($time)).'分钟前';
+                   } 
+                  ?> </span>
+                  <!--源自：<a href="__APP__/Index/video?Vid={$vo.Nlid}" target="_blank">
+                  <span>{$vo.Ltitle} </span></a></p>-->
+                  源自：<a href="#">
+                  <span>{$vo.Ltitle} </span></a></p>
+                </div>
+                <div id="{$vo.Nid}" class="editordel">
+                {if condition='$vo["Ntype"] eq 0'}
+                    <a href="javascript:void(0);" class="editnote" title="编辑此条笔记" target="_blank"></a>
+                    <em>|</em>
+                {/if}
+                <a href="javascript:void(0)" class="delnote" title="删除此条笔记"></a>
+                </div>
+              </div>
+            </div>
+          {/volist}
+          <div class="page">
+                {$pageshow}
+          </div>
+<script type="text/javascript" src="__PUBLIC__/js/usernote.js"></script>
+{/block}
+

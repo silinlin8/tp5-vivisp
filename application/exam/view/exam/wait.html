@@ -1,0 +1,41 @@
+{extend name="exam/base" /}
+{block name="container"}
+	<div class="container">
+		<div class="left-area">
+			<img src="__PUBLIC__/images/me_icon_04.gif" id="personphoto">
+			<ul class="basic-info">
+				<li>姓名: {$name}</li>
+				<li>身份证号: {$identity}</li>
+				<li>准考证号: {$orders}</li>
+			</ul>
+			<div class="wait-time">
+				距离考试时间还有：<strong id="time">10</strong>秒
+			</div>
+		</div>
+		<div class="right-area">
+			<h2 class="login-title">考试要求</h2>
+			<ul class="exam-ban">
+				<li>
+					<strong>不要作弊</strong>
+				</li>
+				<li>
+					<strong>不要使用手机等通讯设备</strong>
+				</li>
+				<li>
+					<strong>不要交头接耳</strong>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var time = 10,
+			timer = setInterval(function () {
+				if (time-- === 1) {
+					window.location.href = "show.html";
+				} else {
+					$("#time").text(time);
+				}
+			}, 1000);
+	</script>
+{/block}
+

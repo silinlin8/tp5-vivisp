@@ -1,0 +1,203 @@
+{include file="../application/common/view/Header.html" /}
+  	<div class="recharge-main">
+      <div class="recharge-explain">
+         <div class="explain-1">
+           <div class="recharge-img">
+             <img src="__PUBLIC__/images/recharge-ex.png">
+           </div>
+           <p>1积分/元</p>
+           <div class="re-ul">
+             <ul>
+               <li>(1)积分可以购买本网站所有课程</li>
+               <li>(2)禁止恶意分享账号和视频,一经发现立即封号</li>
+             </ul>
+           </div>
+         </div>
+         <div class="explain-1">
+           <div class="recharge-img">
+             <img src="__PUBLIC__/images/re-img.png">
+           </div>
+           <div class="re-ul">
+             <ul>
+               <li class="re-question">问：充值不到账？</li>
+               <li>答：一般在线支付都是能在支付成功后即时到账的，但也有可能会因网络原因导致延时，大概等待10几分钟左右也能正常到账。若还未到账请与网站客服联系。</li>
+               <li class="re-question">问：充值需要其他费用吗？</li>
+               <li>答：网站管理员不会收取任何额外费用，若有人假冒收取额外费用，请不要相信，并向网站客服投诉，我们会严肃处理。</li>
+             </ul>
+           </div>
+         </div>
+      </div>
+  		<div class="recharge-container">
+  			  <div class="username">
+      			<label>ViVi账户:</label>
+      			<span>{$name}</span>
+      		</div>
+      		<div class="buy">
+      			<label>充值积分:</label>
+            <input type="text" class="buy-point" id="count" maxlength="7" >
+            
+            <span id="amount-unit">积分</span>
+            <span id="amount-unit-tips">（1元=1积分）</span>
+            <p id="warn" style="display:none"><img src="__PUBLIC__/images/false.png" class="warn-img">请输入数字！！</p>
+      			<!-- <ul>
+      				<li class="tab">
+      					<div class="buy-grade">
+      						<div class="discount">
+      							5<span style="font-size:12px;">折</span>
+      							<img src="__PUBLIC__/images/true.png">
+      						</div>
+      						<div class="money">
+      						<p class="real-money"><span>50元</span>100积分</p>
+      						<p class="delete-money">原价<del>100</del>元</p>
+      						<img src="__PUBLIC__/images/recharge.png">
+      						</div>
+      					</div>
+      				</li>
+      				<li class="tab">
+      					<div class="buy-grade">
+      						<div class="discount">
+      							7<span style="font-size:12px;">折</span>
+      							<img src="__PUBLIC__/images/true.png">
+      						</div>
+      						<div class="money">
+      						<p class="real-money">xxx元xxx积分</p>
+      						<p class="delete-money">原价<del>xxx</del>元</p>
+      						</div>
+      					</div>
+      				</li>
+      				<li class="tab">
+      					<div class="buy-grade">
+      						<div class="discount">
+      							9<span style="font-size:12px;">折</span>
+      							<img src="__PUBLIC__/images/true.png">
+      						</div>
+      						<div class="money">
+      						<p class="real-money">xx元xxx积分</p>
+      						<p class="delete-money">原价<del>xx</del>元</p>
+      						</div>
+      					</div>
+      				</li>
+      			</ul> -->
+      		</div>
+      		<div class="more-money">
+      			<label>还需支付:</label>
+      			<span id="money"></span>
+      			<span style="font-size:14px;">元</span>
+      		</div>
+      		<div class="recharge-way">
+      			<label>支付方式:</label>
+      			<div class="img-zhifubao">
+      					<img src="__PUBLIC__/images/zhifubao.png" class="zhifu">
+      					<img src="__PUBLIC__/images/check-g.png" class="check">
+      			</div>
+      		</div>
+      		<div class="more-money">
+      			<label>应付金额:</label>
+      			<span id="money-1"></span>
+      			<span style="font-size:14px;">元</span>
+      		</div>
+      		<div class="pay-button">
+            <input value="{$Uid}" id="uid" type="hidden">
+            <input value="{$name}" id="name" type="hidden">
+              
+      			<!-- <a href="__APP__/Pay/alipayapi?uid={$Uid}&name={$name}" id="paymoney"> -->
+      				<button type="button" id="pay-finish">立即支付</button>
+      			<!-- </a> -->
+      		</div>
+  		</div>
+    </div>
+    <script>
+    	window.onload = function(){
+    		// var tab = document.getElementsByClassName("tab");
+    		// var buy_grade=[];
+    		// var discount = [];
+    		// var money = [];
+    		// var text = "";
+    		// var more = document.getElementsByClassName("more-money")[0];
+    		// var more1 = document.getElementsByClassName("more-money")[1];
+    		// var more_span = more.getElementsByTagName("span")[0];
+    		// var more_span1 = more1.getElementsByTagName("span")[0];
+    		// var pattern = /[0-9]{1,3}/;
+        
+        var count = document.getElementById("count");
+        var uid = document.getElementById("uid").value;
+        var username = document.getElementById("name").value;
+        // 表单变化
+        function change() {
+              document.getElementById("money").innerText = count.value;
+              document.getElementById("money-1").innerText = count.value;
+              // return setTimeout(change,10)
+        }
+        // $('#pay-finish').on('click',function(){
+        //   // var postdata={}
+        //   // $.post(
+        //     // "/index.php/Pay/alipayapi",
+        //     // postdata,
+        //     // function(data){
+        //   //alert("/index.php/Pay/alipayapi?uid=" + uid + "&WIDprice=" + count.value);
+        //   if () {};
+        //   window.location.href ="/index.php/Pay/alipayapi?uid=" + uid + "&WIDprice=" + count.value + "&name=" + username;
+        //     // }
+        //   // );        
+        // })
+        // 验证输入框中是否为数字
+        var reg = new RegExp("^[0-9]*$");
+        var warn=document.getElementById("warn");
+        count.onkeyup=function(){
+          if (reg.test(count.value)) {
+            warn.style.display="none";
+            change();
+          }else{
+            warn.style.display="block";
+          };
+        }
+        $('#pay-finish').on('click',function(){
+          // var postdata={}
+          // $.post(
+            // "/index.php/Pay/alipayapi",
+            // postdata,
+            // function(data){
+          //alert("/index.php/Pay/alipayapi?uid=" + uid + "&WIDprice=" + count.value);
+          if (count.value&&reg.test(count.value)) {
+            window.location.href =APP+"/Index/Pay/alipayapi?uid=" + uid + "&WIDprice=" + count.value + "&name=" + username;
+          }
+          else{window.location.href="javascript:void(0)"
+            warn.style.display="block";
+          };
+          
+            // }
+          // );        
+        })
+
+        // count.onblur = function() {
+        //   // document.getElementById("c-value").innerText = this.value;
+        //   change();
+        // }
+        // more_span.innerText =text;
+        // more_span1.innerText = text;
+    		// for ( var i = 0; i < tab.length; i++) {
+    		// 	buy_grade.push(tab[i].childNodes[1]);
+    		// 	discount.push(buy_grade[i].childNodes[1]);
+    		// 	money.push(buy_grade[i].childNodes[3]);
+    		// }
+    		// for ( var i = 0; i < buy_grade.length; i++) {
+    		// 	buy_grade[i].index = i;
+    		// 	buy_grade[i].onclick = function() {
+    		// 		for ( var i= 0; i < discount.length; i++){
+    		// 			discount[i].className = "discount";
+    		// 			money[i].className = "money";
+    		// 			buy_grade[i].className = "buy-grade";
+    		// 		};
+    		// 		this.className = "dis";
+    		// 		this.childNodes[1].className = "click-discount";
+    		// 		this.childNodes[3].className = "click-money"; 
+    		// 		text = document.getElementsByClassName("click-money")[0].getElementsByTagName("p")[0].innerText;
+    		// 		var text_number = text.indexOf("元");
+    		// 		var real_text = text.substr(0,text_number);
+    		// 		more_span.innerText = real_text;
+    		// 		more_span1.innerText = real_text;
+    		// 	}
+    		// }
+		}
+    </script>
+    {include file="../application/common/view/Footer.html" /}

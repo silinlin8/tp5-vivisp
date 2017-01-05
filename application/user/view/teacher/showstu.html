@@ -1,0 +1,21 @@
+<include file="Public/Header" />
+<head>
+    <link rel="stylesheet" href="__ROOT__/Public/style/testpaper.css" />
+</head>
+<div class="testhead">注册学生信息</div>
+<table class="show-stu-table">
+	<thead>
+		<th>姓名</th>
+		<th>电话</th>
+		<th>邮箱</th>
+		<th>生源地</th>
+	</thead>
+	<volist name="data" id="vo">
+		<tr>
+			<td>{$vo.realname}</td>
+			<td>{$vo.mobile}</td>
+			<td>{$vo.email}</td>
+			<td>{$vo.nativeburn}</td>
+		</tr>
+	</volist>
+</table>

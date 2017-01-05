@@ -1,0 +1,43 @@
+{extend name="Public:UserIndexBlock" /}
+{block name="content"}
+          {volist name='courses' id='vo'}
+          <div class="main-bd paddcon clearfix">
+            <div class="mycourselist borderB clearfix">
+              <span class="mycourseicon fl"></span>
+              <a href="__APP__/Index/Index/learn?Cid={$vo.plid}" class="coursepic" title="{$vo.pltitle}">
+                <img src="__PUBLIC__/upclassimages/{$vo.plimage}" width="210" height="118">
+              </a>
+              <div class="mycoursename fr">
+                <a href="__APP__/Index/Index/learn?Cid={$vo.plid}" title="{$vo.pltitle}">{$vo.pltitle}</a>
+                <span class="lastupdatetime">{$vo.subluptime}</span>
+                <p class="studypro">最近学习：{$vo.subltitle}</p>
+                <div class="mystudypro">
+                  <span>
+                    <em class="nonele">已学： {$vo.Rstudytime}</em>|<em>总课时：{$vo.pltime}</em><!--|<em>179人参加</em>'-->
+                  </span>
+                  <div class="showProgess">
+                    <progress max="1" value="<?php echo min($vo['Rstudytime']/$vo['pltime'],1); ?>" class="mycoursepro" style="width: 400px;"></progress>
+                  </div>
+                </div>
+              </div>
+              <div class="othermeg">
+                <p>最后学习
+                <?php
+                    if($vo['Rstarttime']){
+                       $time=(int)((time()-strtotime($vo['Rstarttime']))/60);
+                       if($time>1440){
+                        echo floor((int)($time/1440)).'天前';
+                       }elseif($time>60){
+                        echo floor((int)($time/60)).'小时前';
+                       }else{
+                        echo floor(($time)).'分钟前';
+                       } 
+                   }
+                  ?> </span></p>
+                <a href="__APP__/Index/Index/video?Vid={$vo.sublid}" class="playcourseBtn" title="播放课程" ></a><em>|</em>
+                <a href="deleteLesson?Cid={$vo.sublid}" class="gaveup delmycourseBtn" data-cid="85" title="删除此课程"></a>
+              </div>
+            </div>
+          </div>
+          {/volist}
+{/block}

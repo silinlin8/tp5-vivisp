@@ -1,0 +1,47 @@
+<include file='Public:LessonHeader' />
+ <script type="text/javascript" src="__PUBLIC__/js/lookstudent.js"></script>
+    <div id="main" class="cd_main">
+        <div class="course_name_wrap">
+          课程名称:<input id="Cpid" type="hidden" value="{$cInfo.Lid}" />
+          <p class="course_name">{$cInfo.Ltitle}</p>
+        </div>
+    <div class="cd_left clearfix">
+        <div class="course_list">
+        <volist name='chapterlist' id='vo' >
+          <div class="chapter_item" id="{$vo.Lid}">
+            <h3>
+              <span class="updown" onselectstart="return false;">+</span>
+              <strong>
+              <i class="hasOpen"></i>第<span class="cnum">{$i}</span>章 <span class="ch_na">{$vo.Ltitle}</span>
+              </strong>
+            </h3>
+            <ul class="abridge_list">
+            </ul>
+          </div>
+        </volist>
+        </div>
+      </div>
+        <div class="cd_right clearfix">
+          <div class="table_name">
+            <span class="chap_n"></span>章中<span class="abri_n"></span>节的学生学习情况
+          </div>
+              <table cellpadding="0" cellspacing="0" class="table">
+                <tr>
+                  <th class="s_name">姓名</th>
+                  <th class="s_cla">班级</th>
+                  <th class="s_sex">性别</th>
+                  <th class="s_logintime">登录次数</th>
+                  <th class="s_time">学习时长(分钟)</th>
+                  <th class="s_screenshot">网页截图</th>
+                  <th class="s_img">随机照片1</th>
+                  <th class="s_img">随机照片2</th>
+                </tr>
+              </table>
+              <table id="ls_content" cellpadding="0" cellspacing="0" class="table" >
+              </table>
+              <div id="ls_nocontent" style="margin-top: 50px;font-weight: bold;font-size: 1.2em;">
+                <center >暂无学生学习该课程！</center>
+              </div>
+        </div>
+      </div>
+<include file="../application/common/view/Footer.html" />

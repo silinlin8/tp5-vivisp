@@ -1,0 +1,127 @@
+{extend name="enroll/infoBase" /}
+{extend name="enroll/infoBase" /}
+{block name="form-area"}	
+		<div class="prompt-area">
+			个人信息
+		</div>
+		<div class="basic-info">
+			<div class="column">
+				<span class="info-area">
+					<label class="label-area">
+						姓名：
+					</label>
+					{$data.realname}
+				</span>
+				<span class="info-area">
+					<label class="label-area">
+						身份证号码：
+					</label>
+					{$data.identity}
+				</span>
+				<span class="info-area">
+					<label class="label-area">
+						<span class="red-font">*</span>
+						籍贯：
+					</label>
+					{$data.nativeburn}
+				</span>
+				<span class="info-area" id="burn-address">
+					<label class="label-area">
+						<span class="red-font">*</span>
+						生源地：
+					</label>
+					{$data.TPath}
+				</span>
+				<span class="info-area">
+					<label class="label-area">
+						<span class="red-font">*</span>
+						手机号码:
+					</label>
+					{$data.mobile}
+				</span>
+				<span class="info-area">
+					<label class="label-area">
+						<span class="red-font">*</span>
+						毕业院校:
+					</label>
+					{$data.schoolname}
+				</span>
+				<span class="info-area">
+					<label class="label-area">
+						<span class="red-font">*</span>
+						学历:
+					</label>
+					{$data.educationhistory}
+				</span>
+				<span class="info-area">
+					<label class="label-area">
+						<span class="red-font">*</span>
+						专业名称：
+					</label>
+					{$data.professionalname}
+				</span>
+			</div>
+			<div class="column">
+				<span class="info-area">
+					<label class="label-area">
+						性别：
+					</label>
+					{$data.sex}
+				</span>
+				<span class="info-area">
+					<label class="label-area">
+						生日：
+					</label>
+					{$data.birthday}
+				</span>
+				<span class="info-area">
+					<label class="label-area">
+						<span class="red-font">*</span>
+						政治面貌：
+					</label>
+					{$data.type}
+				</span>
+				<span class="info-area">
+					<label class="label-area">
+						<span class="red-font">*</span>
+						民族：
+					</label>
+					{$data.nation}
+				</span>
+				<span class="info-area">
+					<label class="label-area">
+					<span class="red-font">*</span>
+					电子邮箱:
+					</label>
+					{$data.email}
+				</span>
+				<span class="info-area">
+					<label class="label-area">
+						<span class="red-font">*</span>
+						学习方式:
+					</label>
+					{$data.learningmethods}
+				</span>
+				<span class="info-area">
+					<label class="label-area">
+						<span class="red-font">*</span>
+						学位:
+					</label>
+					{$data.degree}
+				</span>
+				<span class="info-area">
+					<label class="label-area">
+						<span class="red-font">*</span>
+						学课层次:
+					</label>
+					{$data.disciplinelevel}
+				</span>
+			</div>
+			<div class="column">
+				<div class="upload-area">
+					<img src="{$data.photo}" id="personPhoto">
+				</div>
+			</div>
+		</div>	
+	<!-- <img src="{$imgsrc}"> -->
+{/block}

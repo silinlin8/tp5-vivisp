@@ -1,0 +1,43 @@
+{extend name="exam/base" /}
+{block name="container"}
+	<div class="container">
+		<div class="input-area">
+			<h2 class="login-title">vivi视频模拟考试入口</h2>
+			<ul class="inputs">
+				<li class="input">
+					<label>姓名：</label>
+					<input type="text" id="name" />
+				</li>
+				<li class="input">
+					<label>身份证号：</label>
+					<input type="text" id="identity" />
+				</li>
+				<li class="input">
+					<label>准考证号：</label>
+					<input type="text" disabled="disabled" value="{$orders}" />
+				</li>
+			</ul>
+			<button id="sure">确认</button>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$("#sure").click(function () {
+			var name = $("#name").val(),
+				identity = $("#identity").val();
+			if (name.length >= 2 && /^[1-9]{1}\d{16}[0-9x]$/.test(identity)) {
+				$.post(
+					"burn_session",
+					{
+						name: name,
+						identity: identity
+					},
+					function (data) {
+						window.location.href = "__APP__/Exam/Exam/wait.html";
+					}	
+				);
+			} else {
+				layer.alert("信息输入有错");
+			}
+		});
+	</script>
+{/block}

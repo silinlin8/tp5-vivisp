@@ -1,0 +1,49 @@
+{include file="../application/common/view/Header.html" /}
+<link rel="stylesheet" href="__PUBLIC__/style/home.css" />
+<link rel="stylesheet" href="__PUBLIC__/style/settings.css">
+    <div id="main">
+      <div class="ccontainer clearfix">
+       {include file="Public:User_Setting" /}
+        <div class="setting-right">
+          <div class="setting-right-wrap settings">
+            <div class="pwd-reset-wrap setting-resetpwd">
+              <div class="wlfg-wrap">
+                <label class="label-name" for="">当前密码</label>
+                <div class="rlf-group">
+                  <input id="oldpwd" type="password" name="oldpwd" class="rlf-input rlf-input-pwd" placeholder="请输入当前密码" />
+                  <p class="rlf-tip-wrap"></p>
+                </div>
+              </div>
+              <div class="wlfg-wrap">
+                <label class="label-name" for="newpass">新密码</label>
+                <div class="rlf-group">
+                  <input type="password" name="newpass" id="newpwd" class="rlf-input rlf-input-pwd" placeholder="请输入密码">
+                  <p class="rlf-tip-wrap"></p>
+                </div>
+              </div>
+              <div class="wlfg-wrap">
+                <label class="label-name" for="confirm">确认密码</label>
+                <div class="rlf-group">
+                  <input type="password" name="confirm" id="confirmpwd" class="rlf-input rlf-input-pwd" placeholder="请输入密码">
+                    <p class="rlf-tip-wrap"></p>
+                </div>
+              </div>
+              <div class="wlfg-wrap">
+                  <label class="label-name" for=""></label>
+                  <div class="rlf-group">
+                    <span id="resetpwd-btn-save" hidefocus="true" aria-role="button" class="rlf-btn-green btn-block">保存</span>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      $(".set_btn").hover(function(){
+        $("#nav_list").show();
+      },function(){
+        $("#nav_list").hide();
+      });
+    </script>
+{include file="../application/common/view/Footer.html" /}

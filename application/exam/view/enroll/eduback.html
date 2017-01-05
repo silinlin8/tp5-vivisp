@@ -1,0 +1,124 @@
+{extend name="infoBase" /}
+{block name="form-area"}
+	{empty name="data"}
+		<form method="post" action="__ROOT__/index.php/Exam/Enroll/addedu" enctype="multipart/form-data" id="form">
+		{else /}
+		<form method="post" action="__ROOT__/index.php/Exam/Enroll/savedu" enctype="multipart/form-data" id="form">
+	{/empty}
+	<div class="prompt-area">
+		学习经历
+	</div>
+	<div class="edu-info">
+		<p class="metter-color">学历信息请从高往低填写</p>
+		<p class="metter-color">1、学历选择“博士、硕士研究生毕业”则必须填写一条本科或专科记录</p>
+		<p class="metter-color">2、招生批次选择“专升本”则必须填写一条专科记录</p>
+		<p class="metter-color">3、学位为双学士的，其主修和辅修学位作为两条学习经历，分别填写，学位均选择“双学士”。</p>
+		<p class="metter-color">4、学历信息中包含一个选项是否全日制最高学历，若此选项标识为最高学历，则学习形式必须是普通全日制，请结合自己的实际学历情况进行选择</p>
+		<p class="metter-color">5、最高学历的下一级学历证号和学位证号必输， “学历证书号”栏和“学位证书号”栏中：硕博连读人员如无硕士学位、学历证号，填写“无”；留学生需填写教育部留学服务中心的国外学历、学位认证号，暂未获取的填写“无”。</p>
+		<div class="form-left">
+			<input type="hidden" name="id" value="{$data.id}" />
+			<ul>
+				<li class="line-height">
+					<span class="red-font">*</span>入学时间:
+					<input class="mesInput online" type="date" name="enrolltime" value="{$data.enrolltime}" />
+					<span class="red-font">*</span>毕业时间:
+					<input type="date" class="mesInput" name="gradtime" value="{$data.gradtime}" />
+				</li>
+				<li class="line-height">
+					<span class="red-font">*</span>学校名称:
+					<input type="text" class="mesInput inputlenght" name="schoolname" value="{$data.schoolname}" />
+				</li>
+				<li class="line-height">
+					<span class="red-font">*</span>学习形式:
+					<select class="info-select" name="learningmethods">
+						{empty name="learningmethods"}
+							<option selected="selected">请选择</option>	
+						{/empty}
+						{volist name="learning_methods" id="learning_methods"}
+							<option value="{$learning_methods.type}" {if condition="$data['learningmethods'] eq $learning_methods['type']"}selected{/if}>{$learning_methods.type}</option>
+						{/volist}
+					</select>
+				</li>
+				<li class="line-height">
+					<span class="red-font">*</span>学历:
+					<select class="info-select select-position online" name="educationhistory">
+						{empty name="educationhistory"}
+							<option selected="selected">请选择</option>	
+						{/empty}
+						{volist name="education_history" id="edu_history"}
+							<option value="{$edu_history.type}" {if condition="$data['educationhistory'] eq $edu_history['type']"}selected{/if}>{$edu_history.type}</option>
+						{/volist}
+					</select>
+					<span>学历证书号:</span>
+					<input type="text" class="mesInput" name="degreecertificate" value="{$data.degreecertificate}" /> 
+				</li>
+				<li class="line-height">
+					<span class="red-font">*</span>招生批次:
+					<select class="info-select online" name="enrollmentbatch">
+						{empty name="data.enrollmentbatch"}
+							<option selected="selected">请选择</option>
+						{/empty}
+						{volist name="enrollment_batch" id="enrollment_batch"}
+							<option value="{$enrollment_batch.type}" {if condition="$data['enrollmentbatch'] eq $enrollment_batch['type']"}selected{/if}>{$enrollment_batch.type}</option>
+						{/volist}
+					</select>
+					<span class="red-font">*</span>是否全日制最高学历:
+					<select class="info-select" name="highesteducation">
+						{empty name="data.highesteducation"}
+							<option selected="selected">请选择</option>							
+						{/empty}
+						{if condition="$data['highesteducation'] eq 1"}
+							<option value="1" selected>是</option>
+							<option value="0">否</option>
+						{else /}
+							<option value="1">是</option>
+							<option value="0" selected>否</option>
+						{/if}
+					</select>
+				</li>
+				<li class="line-height">
+					<span class="red-font">*</span>学位:
+					<select class="info-select select-position online" name="degree">
+						{empty name="degree"}
+							<option selected="selected">请选择</option>							
+						{/empty}
+						{volist name="degree" id="degree"}
+							<option value="{$degree.type}" {if condition="$data['degree'] eq $degree['type']"}selected{/if}>{$degree.type}</option>
+						{/volist}
+					</select>
+					<span>学位证书号</span>
+					<input type="text" class="mesInput" name="degreecertificateno" value="{$data.degreecertificateno}" />
+				</li>
+				<li class="line-height">
+					<span> 学科层次：</span>
+					<select class="info-select" name="disciplinelevel">
+						{empty name="data.disciplinelevel"}
+							<option selected="selected">请选择</option>
+						{/empty}
+						{volist name="discipline_level" id="discipline_level"}
+							<option value="{$discipline_level.type}" {if condition="$data['disciplinelevel'] eq $discipline_level['type']"}selected{/if}>{$discipline_level.type}</option>
+						{/volist}
+					</select>
+				</li>
+				<li class="line-height">
+					<span class="red-font">*</span>专业名称:
+					<input type="text" class="mesInput" name="professionalname" value="{$data.professionalname}" />
+					<span>专业排名:</span>
+					<span>第</span><input type="text" class="number" name="ranking" value="{$data.ranking}" /><span>名</span><span>共</span><input type="text" class="number" name="totalranking" value="{$data.totalranking}" /><span>人</span>
+				</li>
+				<li class="line-height">
+					<span>研究方向:</span>
+					<input type="text" class="mesInput" name="researcharea" value="{$data.researcharea}" />
+					<label class="metter-color label-position">研究生请填写研究方向</label>
+				</li>
+				<li class="line-height">
+					<span>毕业论文题目:</span>
+					<input type="text" class="mesInput inputlenght" name="mba" value="{$data.mba}"></input>
+				</li>
+			</ul>
+			<div class="savearea">
+				<button type="submit" class="savebutton">保存</button>
+			</div>
+		</div>
+	</div>
+{/block}

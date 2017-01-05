@@ -1,0 +1,51 @@
+
+{empty name="uid" }
+    {include file='../application/common/view/IndexHeader.html' /}
+    {else/}
+    {include file='../application/common/view/Header.html' /}
+{/empty}
+<head><title>vivi视频网_联系我们</title></head>
+  <link rel="stylesheet" href="__PUBLIC__/style/about.css"/>
+  <div id="main">
+    <div class="container clearfix">
+      {include file='Public:AboutLeft' /}
+      <div class="other-right ">
+        <div class="other-right-wrap others">
+          <div id="pjax-container">
+            <ul class="other-contact clearfix">
+              <li>
+                <h1>计算机类培训</h1>
+                <h2>孙老师</h2>
+                <p>
+                  电话：13082360130 <br>
+                  QQ：345268621 <br>
+                  QQ群：151967057
+                </p>
+              </li> 
+              <li>
+                <h1>电气类培训</h1>
+                <h2>李老师</h2>
+                <p>
+                  电话：13273289275 <br>
+                  QQ：471383438<br>
+                  QQ群：234462665&nbsp;&nbsp;&nbsp;234625512<br>
+                  新建群：184318692&nbsp;&nbsp;&nbsp;240081051<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;263607165&nbsp;&nbsp;&nbsp;330162864
+                </p>
+              </li>
+              
+              <li>
+                <h1>培训地址</h1>
+                <h2>河北省保定市新市区富昌路126号北院电力培训</h2>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{empty name="uid" }
+    {include file='../application/common/view/IndexFooter.html' /}
+    {else/}
+     {include file='../application/common/view/Footer.html' /}
+{/empty}

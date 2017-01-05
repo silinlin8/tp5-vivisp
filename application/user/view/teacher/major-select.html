@@ -1,0 +1,42 @@
+<div class="QuesArea">
+	<include file="tab" />
+	<div class="data-table">
+		<table>
+			<thead>
+				<tr>
+					<th class="check_box">
+						<input type="checkbox" id="checkall" onclick="chooseall()">
+					</th>
+					<th class="identifier">编号</th>
+					<th class="program">题目</th>
+					<th class="writer">作者</th>
+					<th class="lstupdate">最后更新</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<volist name="data" id="vo">
+					<tr>
+						<td>{$vo.id}</td>
+						<td>{$vo.content}</td>
+						<td>2015-12-18 17:36</td>
+						<td class="operate">
+							<a href="">编辑</a>
+							<a href="">删除</a>
+						</td>
+					</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<script type="text/javascript">
+	function chooseall(){
+		var sit = document.getElementById('checkall').checked;
+		if(sit){
+			$("input").prop("checked",true);
+		}
+		else{
+			$("input").prop("checked",false);
+		}
+	}
+</script>

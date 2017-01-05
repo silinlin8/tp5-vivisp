@@ -1,0 +1,42 @@
+<div class="QuesArea">
+	<include file="tab" />
+	<div class="data-table">
+		<table>
+			<thead>
+				<tr>
+					<th class="identifier">编号</th>
+					<th class="program">题目</th>
+					<th class="lstupdate">最后更新</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<volist name="data" id="vo">
+					<tr>
+						<td>{$vo.id}</td>
+						<td class="content">{$vo.content}</td>
+						<td>{$vo.update_time}</td>
+						<td class="operate">
+							<a href="{:U('quesEdit','id='.$vo['id'].'&type='.$url)}">编辑</a>
+							<a href="{:U('delete', 'id='.$vo['id']. '&type='.$url)}">删除</a>
+						</td>
+					</tr>
+				</volist>
+			</tbody>
+		</table>
+	</div>
+	<div class="page">
+		{$page}
+	</div>
+</div>
+<script type="text/javascript">
+	function chooseall(){
+		var sit = document.getElementById('checkall').checked;
+		if(sit){
+			$("input").prop("checked",true);
+		}
+		else{
+			$("input").prop("checked",false);
+		}
+	}
+</script>

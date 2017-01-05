@@ -1,0 +1,87 @@
+<include file="../application/common/view/IndexHeader.html" />
+<link rel="stylesheet" href="__PUBLIC__/style/home.css" />
+<link rel="stylesheet" href="__PUBLIC__/style/settings.css">
+<input type="hidden" value='{$email}' id="re_email">
+    <div id="main">
+      <div class="ccontainer clearfix">
+        <div class="setting-right">
+          <div class="setting-right-wrap settings">
+            <div class="pwd-reset-wrap setting-resetpwd" style="margin-left:-55px;">
+              <div class="wlfg-wrap">
+                <h1 style="font-size:18px;margin-left:200px;margin-bottom:20px;">当前邮箱：</h1>
+                <div class="rlf-group" style="font-size:20px;">
+                  {$email}
+                  <p class="rlf-tip-wrap"></p>
+                </div>
+              </div>
+              <div class="wlfg-wrap" style="margin-left:-16px;">
+                <label class="label-name" for="newpass">新密码</label>
+                <div class="rlf-group" style="margin-bottom:5px;">
+                  <input type="password" name="newpass" id="newpwd" class="rlf-input rlf-input-pwd" placeholder="请输入密码">
+                  <p class="rlf-tip-wrap newpwd" style="color:#000;">请输入6-16位密码，区分大小写，不能使用空格！</p>
+                </div>
+              </div>
+              <div class="wlfg-wrap" style="margin-left:-16px;">
+                <label class="label-name" for="confirm">确认密码</label>
+                <div class="rlf-group" style="margin-bottom:5px;">
+                  <input type="password" name="confirm" id="confirmpwd" class="rlf-input rlf-input-pwd" placeholder="请输入密码">
+                    <p class="rlf-tip-wrap confirmpwd" style="color:#000;" >请确认密码！</p>
+                </div>
+              </div>
+              <div class="wlfg-wrap" style="margin-left:-16px;">
+                  <label class="label-name" for=""></label>
+                  <div class="rlf-group">
+                    <span id="resetpwd-btn-save" hidefocus="true" aria-role="button" class="rlf-btn-green btn-block">保存</span>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      $(".set_btn").hover(function(){
+        $("#nav_list").show();
+      },function(){
+        $("#nav_list").hide();
+      });
+      $("#newpwd").bind("blur",function(){
+        var txt = $("#newpwd").val();
+        var pattern = /\S{6,16}/;
+        if(!pattern.test(txt)){
+          $(".newpwd").css("color","#be3948");
+          error($("#newpwd"),"请按要求输入密码！");
+          $("#resetpwd-btn-save").setAttribute("disabled","disabled");
+        }else{
+          $(".newpwd").text("");
+        }
+      });
+      $("#confirmpwd").bind("blur",function(){
+        var txt = $("#newpwd").val();
+        var confirmtxt = $("#confirmpwd").val();
+        if(txt == confirmtxt){
+          $(".confirmpwd").text("");
+        }else{
+          error($("#confirmpwd"),"两次输入的密码不一样！");
+        }
+      });
+      $("#resetpwd-btn-save").click(function(){
+         $.post(
+          "changepwd",
+          {
+            "newpwd": $("#newpwd").val(),
+            "re_email": $("#re_email").val()
+          },
+          function(data){
+            if(data.errno == 1){
+              alert("修改密码成功！请点击“确定”登录吧！！");
+              window.location.href = data.msg;
+            }else{
+              alert("未修改成功！再试一遍！");
+              window.location.reload();
+            };
+          }
+        )
+      });
+    </script>
+<include file="../application/common/view/Footer.html" />

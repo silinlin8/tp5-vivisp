@@ -1,0 +1,47 @@
+{empty name="uid" }
+    {include file='../application/common/view/IndexHeader.html' /}
+    {else/}
+    {include file='../application/common/view/Header.html' /}
+{/empty}
+  <head><title>学吧网_意见反馈</title></head>
+  <link rel="stylesheet" href="__PUBLIC__/style/about.css"/>
+  <div id="main">
+    <div class="container clearfix">
+    {include file='Public:AboutLeft' /}
+      <div class="other-right ">
+        <div class="other-right-wrap others">
+          <div id="pjax-container">
+            <div class="">
+              <h1>意见反馈</h1>
+              <div class="feedback-wrap">
+                <div class="result-wrap">
+                  <h2>提交成功</h2>
+                  <p>感谢你的建议，我会努力让自己变得高大上！</p>
+                  <a href="javascript:void(0)" hidefocus="true">继续添加建议</a>
+                </div>
+                <div class="field-wrap">
+                  <div>
+                    <textarea name="info" id="info" class="phd" cols="30" rows="10" placeholder="骚年，哪有不爽，来喷吧！"></textarea>
+                    <p class="rlf-tip-wrap"></p>
+                  </div>
+                  <div>
+                    <input type="text" name="contact" id="contact" class="phd" placeholder="求联系方式（邮箱、qq、电话），产品经理给您跪了！">
+                    <p class="rlf-tip-wrap"></p>
+                  </div>
+                  <div class="btn-wrap clearfix">
+                      <button hidefocus="true" id="submit" class="fr">提交</button>
+                      <p id="feedback-error" class="rlf-tip-wrap rlf-tip-error" style="display: none;"></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{empty name="uid" }
+    {include file='../application/common/view/IndexFooter.html' /}
+    {else/}
+     {include file='../application/common/view/Footer.html' /}
+{/empty}

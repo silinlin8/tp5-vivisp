@@ -1,0 +1,23 @@
+<div class="tabline">
+	<div onmouseover="showdrop()" onmouseout="killdrop()" class="btn-group">
+		<button class="btn">
+		新增
+		<i class="btn-arrowdown"></i>
+		</button>
+		<ul style="display:none;" class="dropdown">
+			<a href="__ROOT__/index.php/Teacher/questionadd/type/{$url}.html" >
+				<li>题目</li>
+			</a>
+		</ul>
+	</div>
+</div>
+<script type="text/javascript">
+	function showdrop(){
+		$(".dropdown").css("display","block");
+		$(".btn-arrowdown").attr("class","btn-arrowup");
+	}
+	function killdrop(){
+		$(".dropdown").css("display","none");
+		$(".btn-arrowup").attr("class","btn-arrowdown");
+	}
+</script>

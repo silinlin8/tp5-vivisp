@@ -1,0 +1,19 @@
+<volist name="major_select" id="vo">
+    <div id="test-editormd-view-many{$i}" class="test-editormd-view" style="width:80%;float:right;">
+        {$i}.&nbsp;
+        <textarea style="display:none;">
+            {$vo.content}
+        </textarea>
+        <input type="checkbox" value="A" name="{$vo.id}[]" />
+        <label>A</label>
+        <input type="checkbox" value="B" name="{$vo.id}[]" />
+        <label>B</label>
+        <input type="checkbox" value="C" name="{$vo.id}[]" />
+        <label>C</label>
+        <input type="checkbox" value="D" name="{$vo.id}[]" />
+        <label>D</label>
+        <label>答案不确定:</label>
+        <input type="checkbox" id="{$i}" class="canClick" />
+        <br />
+    </div>
+</volist>

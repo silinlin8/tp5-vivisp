@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="__PUBLIC__/images/favico.ico">
+    <link rel="stylesheet" href="__ROOT__/mdeditor/css/editormd.css" />
+    <link rel="stylesheet" href="__ROOT__/Public/style/testpaper.css" />
+    <title>模拟考试</title>
+</head>
+<body>
+    <form action="./grade.html" method="post" id="forms">
+<header class="show-header">
+    <ul class="show-logos">
+        <li><h2>vivi视频模拟电网考试<span class="split">|</span></h2></li>
+        <li><strong>在线测评试卷</strong></li>
+        <li><strong id="loading">试卷加载完毕，您可以开始答题！</strong></li>
+    </ul>
+    <span class="end-time">
+        剩余
+        <strong id="count-down">179分59秒</strong>
+    </span>
+    <input type="button" id="sure" value="提交答案" />
+    <input type="submit" id="submit" style="display:none;" />
+</header>
+<div class="testhead">试卷</div>
+<div class="test-left">
+    <div class="person-info">
+       <img src="__PUBLIC__/images/me_icon_04.gif" id="personphoto">
+        <ul class="basic-info">
+            <li>姓名: {$name}</li>
+            <li>身份证号: {$identity}</li>
+            <li>准考证号: {$orders}</li>
+        </ul>
+    </div>
+    <div class="a-checks">
+        <for start="1" end="$length">
+            <div class="unsureques">
+                <a href="#test-editormd-view-datum{$i}" class="question-target">{$i}</a>
+                <input type="checkbox" id="target{$i}" class="no-sure" />
+            </div>
+        </for>    
+    </div>
+</div>
+<div id="exam">
+    {volist name="data" id="vo"}
+        {switch name="i"}
+            {case value="1"}<h3>一、专业单选题(每题0.5分，共50题,计25分)</h3>{/case}
+            {case value="51"}<h3>二、专业判断(每题0.5分，共30题，计15分)</h3>}/case}
+            }case value="81"}<h3>三、专业多选(每题1分，共25题，计25分)</h3>{/case}
+            {case value="106"}<h3>四、电力与能源战略单选题:(共30题，每题0.5分，计15分)</h3>{/case}
+            {case value="136"}<h3>五、综合单选题：（共20题，每题1分，计20分）</h3>{/case}
+            {case value="146"}<h3>根据146题资料，回答146～150题。</h3>{/case}
+            {case value="151"}<h3>根据151题资料，回答151～150题。</h3>{/case}
+        {/switch}
+        <div id="test-editormd-view-datum{$i}" class="test-editormd-view" style="float:right;">
+            第{$i}题&nbsp;本小题{$vo.grade}分
+            <textarea style="display:none;">
+                {$vo.question}
+            </textarea>
+            (&nbsp;&nbsp;<label>答案不确定:</label>
+            <input type="checkbox" id="{$i}" class="canClick" />&nbsp;&nbsp;)
+            <br />
+        </div>        
+    {/volist}
+</div>
+<input type="hidden" name="paper" value="{$paper}" />
+</form>
+<input type="hidden" id="length" value="{$length}">
+<script src="__ROOT__/mdeditor/write/js/jquery.min.js"></script>
+<script src="__ROOT__/mdeditor/lib/marked.min.js"></script>
+<script src="__ROOT__/mdeditor/lib/prettify.min.js"></script>
+
+<script src="__ROOT__/mdeditor/lib/raphael.min.js"></script>
+<script src="__ROOT__/mdeditor/lib/underscore.min.js"></script>
+<script src="__ROOT__/mdeditor/lib/sequence-diagram.min.js"></script>
+<script src="__ROOT__/mdeditor/lib/flowchart.min.js"></script>
+<script src="__ROOT__/mdeditor/lib/jquery.flowchart.min.js"></script>
+
+<script src="__ROOT__/mdeditor/editormd.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $.each($('.test-editormd-view'),function(index,comment){
+            var id = $(comment).attr('id');
+            editormd.markdownToHTML(id, {
+                htmlDecode      : "style,script,iframe",  // you can filter tags decode
+                emoji           : true,
+                taskList        : true,
+                tex             : true,  // 默认不解析
+                flowChart       : true,  // 默认不解析
+                sequenceDiagram : true,  // 默认不解析
+            });
+        });
+    });
+
+    window.onload = function () {
+        var clicks = document.querySelectorAll(".canClick"),
+            len = clicks.length;
+        countDown();
+        checkedFun();
+        refuseClick();
+        $("#sure").click(function () {
+            if (sureSubmit()) {
+                $("#submit").click();
+            }
+        });
+        for (var i = 0; i < len; i++) {
+            clicks[i].onclick = function (num) {
+                var index = 1, label_index;
+                return function () {
+                    if (index++ % 2 !== 0) {
+                        if (num < 10) {
+                            label_index = "one-num";
+                        } else if (num < 100) {
+                            label_index = "two-num";
+                        } else {
+                            label_index = "three-num";
+                        }
+                        $("#target" + (num + 1)).parent().append("<label class=" + label_index + ">√</label>"); 
+                    } else {
+                        $("label", $("#target" + (num + 1)).parent()).remove();
+                    }
+                }
+            }(i);
+        }
+    };
+    function countDown () {
+        var
+            endTime = Number(new Date()) + 1000 * 3600 * 3,
+            now = 0,
+            min = 0,
+            second = 0,
+            timer = setInterval(function () {
+                if (endTime - now <= 0) {
+                    clearInterval(timer);
+                    timer = null;
+                    alert("时间已到,试卷将自动提交");
+                    return $("#submit").click();
+                }
+                now = Number(new Date());
+                min = (endTime - now) / 1000 / 60 | 0;
+                second = (endTime - now) / 1000 % 60 | 0;
+                $("#count-down").text(min + "分" + second + "秒"); 
+            }, 1000);
+    }
+    function sureSubmit () {
+        if (confirm("确定提交试卷吗？")) {
+            return confirm("请再次确认是否要提交试卷？");
+        }
+        return false;
+    }
+    function refuseClick () {
+        $(".test-left").click(function (e) {
+            if (e.target.type === "checkbox") {
+                e.preventDefault();
+            }
+        });
+    }
+    function checkedFun () {
+        $("#exam").click(function (e) {
+            if (e.target.type === "radio") {
+                var p = e.target.parentNode,
+                    labels = p.getElementsByTagName("label");
+                for (var i = 0, label; label = labels[i++];) {
+                    label.style.color = "#000";
+                }
+                getNextElement(e.target).style.color = "red";
+                $("#target" + /\d+/.exec(e.target.parentNode.parentNode.id)["0"]).prop("checked", true);
+            }
+        });
+    }
+    function getNextElement (ele) {
+        if (ele.nextSibling.nodeType === 1) {
+            return ele.nextSibling;
+        } else {
+            return getNextElement(ele.nextSibling);
+        }
+    }
+</script>
+</body>
+</html>

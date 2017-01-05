@@ -1,0 +1,176 @@
+{extend name="enroll/infoBase" /}
+{block name="form-area"}
+	{empty name="data"}
+		<form method="post" action="__ROOT__/index.php/Exam/Enroll/addaca" enctype="multipart/form-data" id="form">
+		<else />
+		<form method="post" action="__ROOT__/index.php/Exam/Enroll/saveaca" enctype="multipart/form-data" id="form">
+	{/empty}
+	<div class="prompt-area more-width">
+		论文发表情况(非必填)
+	</div>
+	<div class="edu-info" >
+		<div class="remind-words">
+			填写学术论文成果，建议按重要级别从高到低，5条以内。(现只模拟一条)
+		</div>
+		<a href="javascript:void(0);" onclick="showarea('paper')">
+			<img src="__PUBLIC__/images/new-add.gif" style="padding: 10px;">
+		</a>
+		<div style="display: none;" id="paper">
+			<a href="javascript:void(0);" onclick="hidearea('paper')" class="hidebutton">
+				<img src="__PUBLIC__/images/hide.gif">
+			</a>
+			<table class="tab-info">
+				<tr class="tr-line">
+					<td class="tab-left">
+						<span class="red-font">*</span>论文级别:
+					</td>
+					<td class="tab-right">
+						<select class="selLen" name="paperlevel">
+							{empty name="paperlevel"}
+							<option selected="selected">请选择</option>
+							{/empty}
+							{volist name="paper_level" id="paper_level"}
+								<option value="{$paper_level.type}" {if condition="$data['paperlevel'] eq $paper_level['type']"}selected{/if}>{$paper_level.type}</option>
+							{/volist}
+						</select>
+					</td>
+				</tr>
+				<tr class="tr-line">
+					<td class="tab-left">
+						<span class="red-font">*</span>论文名称:
+					</td>
+					<td class="tab-right">
+						<input type="text" name="papername" class="mesInput" value="{$data.papername}"></input>
+					</td>
+				</tr>
+				<tr class="tr-line">
+					<td class="tab-left">
+						<span class="red-font">*</span>发表时间:
+					</td>
+					<td class="tab-right">
+						<input type="date" name="publishedtime" class="mesInput" value="{$data.publishedtime}"></input>
+					</td>
+				</tr>
+				<tr class="tr-line">
+					<td class="tab-left">
+						<span class="red-font">*</span>期刊/收录机构名称:
+					</td>
+					<td class="tab-right">
+						<input type="text" name="magazine" class="mesInput" value="{$data.magazine}"></input>
+					</td>
+				</tr>
+				<tr class="tr-line">
+					<td class="tab-left">
+						<span>年度及期次:</span>
+					</td>
+					<td class="tab-right">
+						<input type="text" name="period"  class="mesInput" value="{$data.period}"></input>
+					</td>
+				</tr>
+				<tr class="tr-line">
+					<td class="tab-left">
+						<span>作者排序:</span>
+					</td>
+					<td class="tab-right">
+						<input type="text" name="author" class="mesInput" value="{$data.author}"></input>
+						<label class="metter-color remark-position-1">请填写阿拉伯数字</label>
+					</td>
+				</tr>
+				<tr class="tr-line">
+					<td class="tab-left">
+						<span>论文索引号:</span>
+					</td>
+					<td class="tab-right">
+						<input type="text" name="thesisindex" class="mesInput" value="{$data.thesisindex}"></input>
+					</td>
+				</tr>
+			</table>
+			<div class="savearea">
+				<button type="submit" class="savebutton">保存</button>
+			</div>
+			</div>
+		</div>
+	<div class="prompt-area more-width">
+		科研项目情况(非必填)
+	</div>
+	<div class="edu-info" >
+		<div class="remind-words">
+			科研项目成果，建议按重要级别从高到低，5条以内。(现只模拟一条)
+		</div>
+		<a href="javascript:void(0);" onclick="showarea('research')">
+			<img src="__PUBLIC__/images/new-add.gif" style="padding: 10px;">
+		</a>
+		<div style="display: none;" id="research">
+			<a href="javascript:void(0);" onclick="hidearea('research')" class="hidebutton">
+				<img src="__PUBLIC__/images/hide.gif">
+			</a>
+			<table class="tab-info">
+				<tr class="tr-line">
+					<td class="tab-left">
+						<span class="red-font">*</span>项目级别:
+					</td>
+					<td class="tab-right">
+						<select class="selLen" name="projectlevel">
+							<option selected="selected">请选择</option>
+							{volist name="project_level" id="project_level"}
+								<option value="{$project_level.type}">{$project_level.type}</option>
+							{/volist}
+						</select>
+					</td>
+				</tr>
+				<tr class="tr-line">
+					<td class="tab-left">
+						<span class="red-font">*</span>项目名称:
+					</td>
+					<td class="tab-right">
+						<input type="text" name="projectname" class="mesInput" value="{$data.projectname}" />
+					</td>
+				</tr>
+				<tr class="tr-line">
+					<td class="tab-left">
+						<span class="red-font">*</span>开始时间:
+					</td>
+					<td class="tab-right">
+						<input type="date" name="starttime" class="mesInput" value="{$data.starttime}" />
+					</td>
+					<td class="tab-left">
+						<span class="red-font">*</span>结束时间:
+					</td>
+					<td class="tab-right">
+						<input type="date" name="finishtime" class="selLen" value="{$data.finishtime}" />
+					</td>
+				</tr>
+				<tr class="tr-line">
+					<td class="tab-left">
+						<span class="red-font">*</span>项目所属单位:
+					</td>
+					<td class="tab-right">
+						<input type="text" name="projectunit" class="mesInput" value="{$data.projectunit}" />
+					</td>
+				</tr>
+				<tr class="tr-line">
+					<td class="tab-left">
+						<span class="red-font">*</span>项目编号:
+					</td>
+					<td class="tab-right">
+						<input type="text" name="projectnumber" class="mesInput" value="{$data.projectnumber}" />
+					</td>
+				</tr>
+				<tr class="tr-line">
+					<td class="tab-left">
+						<span>承担主要工作:</span>
+					</td>
+					<td class="tab-right">
+						<textarea class="remarkPosit" name="mainwork">{$data.mainwork}</textarea>
+						<label class="metter-color remark-position">100个汉字以内</label>
+					</td>
+				</tr>
+			</table>
+			<div class="savearea">
+				<button type="submit" class="savebutton">保存</button>
+			</div>
+			</div>
+		</div>
+	</form>
+	<script type="text/javascript" src="__PUBLIC__/js/ability.js"></script>
+{/block}

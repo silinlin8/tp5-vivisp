@@ -1,0 +1,129 @@
+{empty name="uid" }
+    {include file='../application/common/view/IndexHeader.html' /}
+    {else/}
+    {include file='../application/common/view/Header.html' /}
+{/empty}
+    <head><title>ViVi视频_课程列表</title></head>
+    <div id="main" class="tranmain">
+      <div class="classlist container1000">
+        <div class="top clearfix" style="position:relative ;">
+          <div id="search">
+            <div class="fl">找课程</div>
+            <form id="form1" class="fl" action="__APP__/Index/Index/courselist" method="get">
+              <input type="text" class="text keyword" name="keyword" value="" autocomplete="off" />
+              <input type="hidden" name="view_type" value="list" />
+              <input type="hidden" name="sorttype" value="late" />
+              <input type="button" class="btn" onclick="form1.submit()" />
+              <span class="course_result">
+              {present name="havkey"}
+              {if condition='$havkey eq 1'}
+                搜索“<em class="skey">{$keyword}</em>”找到 <em class="snum">{$count}</em> 门课程</span>
+              {/if}
+              {/present}
+            </form>
+          </div>
+        </div>
+        <div id="course-type" class="clearfix">
+          {volist name="catShow" id='vo'}
+            <div class="dt">{$vo['title']}：</div>
+            {volist name="vo['data']" id="item"}
+               <div class="dd"><a {if condition="$item['Cid'] eq $clabel"}class="active"{/if} href="__APP__/Index/Index/courselist?clabel={$item.Cid}&page=1&easy={$easy}&sorttype={$sorttype}&view_type={$view_type}" >{$item.title}</a></div>
+            {/volist}
+          {/volist}
+        </div>
+        {notpresent name="havkey"}
+        
+        
+        <div id="orderby" class="clearfix">
+          <dl id="sort" class="sort fl filter">
+            <dt>排序：</dt>
+            <dd><a {if condition="$sorttype eq 'late'"}class="active"{/if} href="__APP__/Index/Index/courselist?clabel={$clabel}&page=1&easy={$easy}&sorttype=late&view_type={$view_type}"> 最新</a></dd>
+            <dd><a {if condition="$sorttype eq 'pop'"}class="active"{/if} href="__APP__/Index/Index/courselist?clabel={$clabel}&page=1&easy={$easy}&sorttype=pop&view_type={$view_type}">热门</a></dd>
+          </dl>
+          <dl id="view_type" class="view fr filter">
+            <dt>显示：</dt>
+            <dd>
+              <a title="平铺" id="view_card" {if condition="$view_type neq 'list'"} class="active"{/if}
+              href="__APP__/Index/Index/courselist?clabel={$clabel}&page=1&easy={$easy}&sorttype={$sorttype}&view_type=card" ></a>
+            </dd>
+            <dd>
+              <a id="view_list" title="列表" {if condition="$view_type eq 'list'"} class="active"{/if} 
+              href="__APP__/Index/Index/courselist?clabel={$clabel}&page=1&easy={$easy}&sorttype={$sorttype}&view_type=list"  ></a>
+            </dd>
+          </dl>
+        </div>
+        
+        {/notpresent}
+        <div class="content clearfix">
+        {if condition="$view_type neq 'list'"}
+            {empty name='couselist'}
+              <div class="none_course">
+                暂无课程
+              </div>
+            {else/}
+              <ul class="card">
+               {volist name='couselist' id='vo'}
+                 <li>
+                    <a href="__APP__/Index/Index/view?Cid={$vo.Lid}">
+                      <img alt="{$vo.Ltitle}" title="{$vo.Ltitle}" width="300" height="170" src="__PUBLIC__/upclassimages/{$vo.Limage}" />
+                      <h5 title="{$vo.Ltitle}">{$vo.Ltitle}</h5>
+                      <p class="course_desc">{$vo.Ldesc}</p><div class="tips">
+                        <span class="fl">{$vo.Lnum}人购买</span>
+                        <span class="fr">课程时长：{$vo.Ltime}分钟</span>
+                      </div>
+                    </a>
+                  </li>
+               {/volist}
+              </ul>
+            {/empty}
+          {else/}
+              {empty name='couselist'}
+                  <div class="none_course">
+                    暂无课程
+                  </div>
+              {else/}
+                <ul class="list">
+               {volist name='couselist' id='vo'}
+                <li class="clearfix">
+                  <div class="classimg">
+                    <a href="__APP__/Index/Index/view?Cid={$vo.Lid}"><img src="__PUBLIC__/upclassimages/{$vo.Limage}" width="300" height="170" alt="{$vo.Ltitle}" title="{$vo.Ltitle}" /></a>
+                  </div>
+                  <div class="classname">
+                    <h3><a href="__APP__/Index/Index/view?Cid={$vo.Lid}">{$vo.Ltitle}</a></h3>
+                    <p class="note course_desc">{$vo.Ldesc}</p>
+                    <span class="item">课程时长：<i>{$vo.Ltime}</i>分钟</span>
+                    <span class="item">报名人数：<i>{$vo.Lnum}</i></span>
+                  </div>
+                  <a href="__APP__/Index/Index/view?Cid={$vo.Lid}" class="course_state btn-hascourse">开始学习</a>
+                </li>
+                {/volist}
+              </ul>
+              {/empty}                                        
+          {/if}
+        </div>
+        <div class="page">
+            {$pageshow}
+        </div>
+        <input value="{$pagesize}" type="hidden" id="pagesize">
+        <input value="{$count}" type="hidden" id="count"> 
+        <input value="{$page}" type="hidden" id="pagenum">
+        <a href="#" id="omit">...</a> 
+      </div>
+      <script type="text/javascript">
+        $(function(){
+          var courseDesc=$(".course_desc");
+          for (var i = 0; i < courseDesc.length; i++) {
+            var item=courseDesc[i];
+            if ($(item).html().length > 50) {
+              $(item).html($(item).html().substr(0,49)+"...");
+            }
+          };
+        })
+      </script>
+     <script type="text/javascript" src="__PUBLIC__/js/page.js"></script>
+    </div>
+{empty name="uid" }
+    {include file='../application/common/view/IndexFooter.html' /}
+    {else/}
+     {include file='../application/common/view/Footer.html' /}
+{/empty}

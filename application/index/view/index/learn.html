@@ -1,0 +1,198 @@
+{empty name="uid" }
+    {include file='../application/common/view/IndexHeader.html' /}
+    {else/}
+    {include file='../application/common/view/Header.html' /}
+{/empty}
+<head>
+  <script src="__PUBLIC__/js/progress.js" type="text/javascript"></script>
+  <script src="__PUBLIC__/js/learn.js" type="text/javascript"></script>
+</head>
+    <div id="main" class="tranmain">
+    <input id="course_id" type="hidden" value="{$cInfo.Lid}" />
+      <div class="container1000" id="page_course_learn">
+        <div class="course_nav">
+          <div id="page_header">
+            <h1>{$cLabel}：{$cInfo.Ltitle} </h1>
+            <div id="share" class="fr">
+              <div class="bdsharebuttonbox bdshare-button-style2-16" data-bd-bind="1399774838364">
+                <a href="#" class="bds_more" data-cmd="more"></a>
+                <a title="分享到QQ空间" href="#" class="bds_qzone" data-cmd="qzone"></a>
+                <a title="分享到新浪微博" href="#" class="bds_tsina" data-cmd="tsina"></a>
+                <a title="分享到腾讯微博" href="#" class="bds_tqq" data-cmd="tqq"></a>
+                <a title="分享到人人网" href="#" class="bds_renren" data-cmd="renren"></a>
+              </div>
+             </div>
+          </div>
+          <div class="picture">
+            <a href="__APP__/Index/Index/view?Cid={$cInfo.Lid}">
+              <img src="__PUBLIC__/upclassimages/{$cInfo.Limage}" width="280" height="160" title="{$cInfo.Ltitle}" alt="{$cInfo.Ltitle}">
+            </a>
+          </div>
+          <div class="info">
+            <ul>
+              <li>
+                <div class="info_title">参加人数</div>
+                <div class="info_num">
+                  <i>{$num}</i>
+                </div>
+              </li>
+              <li>
+                <div class="info_title">课程时长</div>
+                <div class="info_num"><i>{$cInfo.Ltime}</i>分钟</div>
+              </li>
+              <li>
+                <div class="info_title">已学时长</div>
+                <div class="info_num timeAl">
+                  <i>{$studytime}</i>分
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="study_status">
+            <ul>
+              <li class="br1">
+                <div class="info_title">学习进度</div>
+                <div class="info_num studyDeep"><i>1-1</i></div>
+              </li>
+              <li>
+                <a id="start-btn" href="__APP__/Index/Index/video?Vid={$fcid}">开始学习</a>
+              </li>
+            </ul>
+          </div>
+          <div id="course-progress">
+            <progress id="p1" max="100" value="">
+            </progress>
+            <div id="learn-tips">
+              学习完成度
+              <i></i>
+            </div>
+          </div>
+        </div>
+        <div class="content_area">
+          <ul class="course-menu clearfix">
+            <li>
+              <a class="ui-tabs-active" id="learnOn" href="javascript:void(0)"><span>学习</span></a>
+            </li>
+            <li><a id="qaOn" href="__APP__/Index/Index/note?Cid={$cInfo.Lid}">笔记</a></li>
+          </ul>
+          {volist name='sublesson' id='vo' key='i'}
+          <div class="learnchapter learnchapter-active">
+            <h3>
+              <span>-</span>
+              <strong>
+                <i class="hasOpenOn"></i>第{$i}章 {$vo.Ltitle}
+              </strong>
+            </h3>
+            <ul class="video">
+            {volist name='vo["subcourse"]' key='k' id='cvo' }
+              <li>
+                <?php
+                  $where['Lid']=$cvo['Lid'];
+                  $lessonModel=db('lesson');
+                  $videoInfo=$lessonModel->where($where)->find();//该节的信息
+                  $videofile = $videoInfo['Limage'];
+                  if (!empty($videofile)) {
+                ?>
+                  <a href="__APP__/Index/Index/video?Vid={$cvo.Lid}" class="studyvideo">
+                <?php
+                  }else{
+                ?>
+                  <a style='text-decoration:none;' class="studyvideo">
+                <?php
+                  }
+                ?>
+                    
+                    <span class="caca">{$i}-{$k}</span> {$cvo.Ltitle} (<?php echo (int)($cvo['Ltime']/60); ?>:<?php echo $cvo['Ltime']%60; ?>)
+                    <span style="position:absolute;right:50px;">&nbsp;&nbsp;&nbsp;&nbsp;<img src="__PUBLIC__/images/jifen.ico">：{$cvo['Lbeans']}个</span>
+                    <i class="<?php
+                    if (in_array($cvo['Lid'], $all)){
+                      if(in_array($cvo['Lid'],$lids)){
+                        echo 'doStudy';
+                      }else{
+                        echo 'hasStudy';
+                      }
+                    } else {
+                      echo "noStudy";
+                    }
+                    ?>" style="position:relative;">
+                    </i>
+                  </a>
+
+              </li>
+            {/volist}
+            </ul>
+          </div>
+          {/volist}
+        </div>
+        <script type="text/javascript">
+          var liList=$(".video li");
+          var infonum=$(".studyDeep i");
+          var flag=0;
+          for (var i = liList.length; i>-1; i--) {
+            if($(liList[i]).find("i").attr("class") == "hasStudy"){
+              $(infonum).html($(liList[i]).find(".caca").html());
+              flag=1;
+              break;
+            }
+          };
+          if (liList.length == 0 || flag==0) {
+             $(infonum).html("1-1");
+          };
+          var noteBtn=$('#qaOn');
+          var zj=$(".studyDeep i").html();
+          var newHref=$(noteBtn).attr("href")+'&zj='+zj;
+          $(noteBtn).attr('href',newHref);
+          var bfss=$(".hasStudy").length/$(".video li").length*100;
+          var bfs=bfss.toFixed(2)+'%';
+          $("#learn-tips").find("i").html(bfs);
+          $("#learn-tips").css("left",bfs);
+          $("#p1").val(bfss);
+          var newHref=$(noteBtn).attr("href")+'&zj='+zj+'&jdt='+bfss;
+          $(noteBtn).attr('href',newHref);
+        </script>
+        <div class="sidebar">
+          <dl>
+            <dt>授课老师</dt>
+            <dd>
+              <div class="course_teacher">
+                <a href="#" class="teacer_pic">
+                  <img src="__PUBLIC__/upimages/{$tInfo.Uimg}" width="80" height="80" />
+                </a>
+                <h3>
+                  <a href="#">{$tInfo.Uname}</a><!--__APP__/Tearcher/index?uid={$tInfo.Uid}-->
+                  <span class="teacher_icon"></span>
+                </h3>
+                <p>{$cLabel}</p>
+                <br class="clear" />
+                <div class="tec_discrip autowrap">{$tInfo.Udesc}</div>
+              </div>
+            </dd>
+          </dl>
+          <dl>
+            <dt>
+              <a href="javascript:;" class="changeUser">换一组</a>
+              <span style="color:#be3948" class="snums">{$num}</span> 位共同学习的同学
+            </dt>
+            <dd>
+              <ul class="users">
+                 {volist name='learners' id='vo'}
+                   <li>
+                    <img src="__PUBLIC__/upimages/{$vo.Uimg}" width="80" height="80" title="{$vo.Uname}" alt="{$vo.Uname}" />
+                    <h3>
+                     <span>{$vo.Uname}</span>
+                    </h3>
+                    <em>{$vo.Uclass}</em>
+                  </li>
+                {/volist}
+              </ul>
+            </dd>
+          </dl>
+        </div>
+        <br class="clear" />
+      </div>
+    </div>
+{empty name="uid" }
+    {include file='../application/common/view/IndexFooter.html' /}
+    {else/}
+     {include file='../application/common/view/Footer.html' /}
+{/empty}

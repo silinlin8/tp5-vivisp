@@ -1,0 +1,68 @@
+{extend name="enroll/infoBase" /}
+{block name="form-area"}
+	{empty name="data"}
+		<form method="post" action="__ROOT__/index.php/Exam/Enroll/addattach" enctype="multipart/form-data" id="form">
+		{else /}
+		<form method="post" action="__ROOT__/index.php/Exam/Enroll/saveattach" enctype="multipart/form-data" id="form">
+	{/empty}
+	<div class="prompt-area more-width">
+		上传电子附件 (非必填)
+	</div>
+	<div class="edu-info" style="height: 200px;">
+		<div class="remind-words">
+			请上传“就业推荐表、成绩单、资格证书”等材料的扫描件，以供招聘单位了解您更多的信息 
+		</div>
+		<div id="paper" style="margin-top: 20px;">
+			</a>
+			<table class="tab-info">
+				<tr class="tr-line">
+					<td class="tab-left">
+						<span class="red-font">*</span>附件类型:
+					</td>
+					<td class="tab-right">
+						<select class="selLen" name="attachmenttype">
+							{empty name="data"}
+								<option selected="selected">请选择</option>
+							{/empty}
+							{volist name="attachment_type" id="attachment_type"}
+								<option value="{$attachment_type.type}" <if condition="$data['attachmenttype'] eq $attachment_type['type']">selected{/if}>{$attachment_type.type}</option>
+							{/volist}
+						</select>
+					</td>
+				</tr>
+				<tr class="tr-line">
+					<td class="tab-left">
+						<span>上传证书:</span>
+					</td>
+					<td class="tab-right">
+						<span id="upload-span">
+							<empty name="data">上传<else />更改</empty>证书
+						</span>
+						<strong id="show-name">{$data.oldname}</strong>
+						<input type="hidden" id="file-name" name="oldname" value="{$data.uploadcertificate}"  />
+						<input type="file" name="uploadcertificate" id="upload-area" value="{$data.uploadcertificate}" />
+						<label class="metter-color label-position left-control right-file">文件类型为[pdf,doc,xls,jpg,png,docx,xlsx]其中之一,大小为1024K之内</label>
+					</td>
+				</tr>
+			</table>
+			<div class="savearea">
+				<button type="submit" class="savebutton">保存</button>
+			</div>
+		</div>
+	</div>
+	</form>
+	<script type="text/javascript" src="__PUBLIC__/js/upload.js"></script>
+	<script type="text/javascript">
+		$(".savebutton").click(function () {
+			upload_order = upload_order || Boolean($("#show-name").text());
+			if (upload_order && $(".selLen").val() !== "请选择") {
+				$("#form").submit();
+			} else {
+				layer.alert("信息填写有错");
+			}
+		}); 
+		$("#upload-span").click(function () {
+			$("#upload-area").click();
+		});
+	</script>
+{/block}

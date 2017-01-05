@@ -1,0 +1,342 @@
+{include file='Public:VideoHeader' /}
+<link rel="stylesheet" href="__PUBLIC__/style/download.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/Scontent.js"></script>
+<input id="cid" type="hidden" value="{$lid}"/>
+<input id="status" type="hidden" value="{$status.statno}"/>
+  <div id="sectionlist" class="hide">
+    <div class="scrollcont">
+      <ul class="detaillist ps-container" style="overflow:overlay">
+      {volist name='sublesson' id='vo'}
+        <li>
+          <span><em></em>第{$i}章 {$vo.Ltitle|getSubstr=###,18}</span>
+          {volist name='vo["subcourse"]' key='k' id='cvo' }
+               <a href="__APP__/Index/Index/video?Vid={$cvo.Lid}" class="studyvideo">
+               {$i}-{$k} {$cvo.Ltitle|getSubstr=###,20} (<?php echo (int)($cvo['Ltime']/60); ?>:<?php echo $cvo['Ltime']%60; ?>)
+               <!--  -->
+                {if condition='$cvo.Lid eq $lid'}
+                    <b>正在学习</b>
+                    <i class="do-study"></i>
+                {/if}
+              </a>
+          {/volist}
+        </li>
+        {/volist}
+      </ul>
+    </div>
+  </div>
+  <div id="study-section">
+    <ul class="submenulist">
+      <li class="video" style="width:100%">&nbsp;</li>
+    </ul>
+  </div>
+  <div id="studyMain">
+    <div id="bgarea" class="partTop">
+      <div class="box" id="J_Box" style="width:1000px; margin:0 auto">
+        <video id="myvideo" class="video-js vjs-default-skin"  width="1000" height="530"poster="__PUBLIC__/images/Course.jpg" data-setup="{}" controls preload="auto">
+       <!--   <video id="ab_video" class="video-js vjs-default-skin" width="1000" height="530" poster="__PUBLIC__/images/Course.jpg" data-setup='{"controls": true, "autoplay": false, "preload": "auto" }'> -->
+        <source src='__PUBLIC__/videoSource/videoSource/{$nowlesson.Limage}' type='video/{$videotype}' />
+       <!--   <source id="video_src" src="/Public/videoSource/videoSource/{$nowlesson.Limage}" type='video/mp4' /> -->
+        </video>
+      </div>
+    </div>
+    <div class="container1000 mb40">
+      <div class="content_area">
+        <div id="disArea">
+          <ul class="course-menu clearfix" id="tab-tit">
+            <li>
+            <a class="active" href="javascript:void(0)" id="qaMenu"><span>笔记</span></a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" class=""><span>问答</span></a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" class=""><span>评论</span></a>
+            </li>
+          </ul>
+          <div id="tab-cont">
+            <div id="noteContent" class="tab-con">
+              <div class="publish clearfix" id="NotePublist">
+                <div class="border-box">
+                  <div class="shot-input noteInput">
+                    <textarea maxlength="300" name="">请输入反馈内容...</textarea>
+                    <p class="inputFontTip"><span class="inputFont"><em>0</em>/300</span></p>
+                  </div>
+                </div>
+                <input type="button" title="发表" value="发表" id="J_NoteSubmit" class="issueBtn">
+              </div>
+              <div id="noteLoadListData">
+                {empty name='notes'}
+                  <div class="unnote">
+                    <span></span>
+                    <p>此课程暂无同学记录过笔记</p>
+                  </div>
+                  <div id="course_note" style="display: none;">
+                    <ul>
+                    </ul>
+                  </div>
+                {else /}
+                  <div id="course_note">
+                    <ul>
+                      {volist name='notes' id='vo'}
+                        <li id='{$vo.Nid}'>
+                          <div class="notelist_headpic">
+                            <!--<a href="__APP__/Index/video?Cid={$cInfo.Lid}"><img src="__PUBLIC__/upimages/{$vo.Uimg}" width="40" height="40"></a>-->
+                            <a href="##"><img src="__PUBLIC__/upimages/{$vo.Uimg}" width="40" height="40"></a>
+                          </div>
+                          <div class="notelist_content">
+                            <div class="u_name">
+                              <!-- <a href="__APP__/User/index?Uid={$vo.Nuid}">{$vo.Uname}</a> -->
+                              <a href="##">{$vo.Uname}</a>
+                            </div>
+                            <p>{$vo.Ndesc}</p>
+                            <div class="notelist-bottom clearfix">
+                              <span title="<?php echo floor((time()-strtotime($vo['Ndate']))/(3600*24)); ?>天前" class="fl timeago"><?php echo floor((time()-strtotime($vo['Ndate']))/(3600*24));  ?>天前</span>
+                              {if condition='$vo.Nuid neq $uid'}
+                                  <div class="notelist-actions">
+                                    <a title="采集" href="javascript:void(0);" class="Jcollect list-praise on" data-mid="987|114539">
+                                    <span class="icon icon_collection "></span>
+                                    </a>
+                                  </div>
+                              {/if}
+                            </div>
+                          </div>
+                        </li>
+                      {/volist}
+                    </ul>
+                  </div>
+                {/empty}
+              </div>
+              <div class="page note-list-page"></div>
+            </div>
+            <div class="tab-con" style="display:none">
+             <div>
+              <div class="que-tit-wrap">
+                <label class="que-la">标题:</label>
+                <div class="que-area">
+                 <div class="qu-control">
+                  <input type="text" maxlength="255" placeholder="请输入问题标题"  class="qu-tit" id="que-Tit"/>
+                 </div>
+                </div>
+              </div>
+              <div class="que-tit-wrap">
+                <label class="que-la">内容:</label>
+                <div class="publish clearfix" id="QuePublist">
+                <div class="border-box">
+                  <div class="shot-input QueInput">
+                    <textarea maxlength="300" name="">请输入讨论内容...</textarea>
+                    <p class="inputFontTip"><span class="inputFont"><em>0</em>/300</span></p>
+                  </div>
+                  <input type="button" title="发布" value="发布" class="relBtn" id="J_QueSubmit">
+                </div> 
+                </div>
+               </div>
+             </div>
+             <div id="QuestionLoadListData">
+                {empty name='questions'}
+                  <div class="unqu">
+                    <span></span>
+                    <p>此课程暂无同学提问</p>
+                  </div>
+                  <div id="course_question" style="display: none;">
+                    <ul>
+                    </ul>
+                  </div>
+                {else /}
+                  <div id="course_question">
+                    <ul id="ques_list">
+                      {volist name='questions' id='vo'}
+                        <li id='{$vo.Qid}' value="{$vo.Qid}" class="ques_li">
+                          <div class="notelist_headpic">
+                            <!-- <a href="__APP__/Index/video?Cid={$cInfo.Lid}"><img src="__PUBLIC__/upimages/{$vo.Uimg}" width="40" height="40"></a> -->
+                              <a href="##"><img src="__PUBLIC__/upimages/{$vo.Uimg}" width="40" height="40"></a> 
+                            <div class="u_name">
+                              <!-- <a href="__APP__/User/index?Uid={$vo.Quid}">{$vo.Uname}</a> -->
+                              <a href="##">{$vo.Uname}</a>
+                            </div>
+                          </div>
+                          <div class="qulist_content">
+                            <p class="Q-tit"><img src="/Public/images/Qtit.png"><p class="Q-tit1">{$vo.Qtit}</p></p>
+                            <p class="Q-que"><img src="/Public/images/Qques.png"><p class="Q-que1">{$vo.Qques}</p></p>
+                            <div class="notelist-bottom clearfix">
+                              <span title="<?php echo floor((time()-strtotime($vo['Qdate']))/(3600*24)); ?>天前" class="fl timeago"><?php echo floor((time()-strtotime($vo['Qdate']))/(3600*24));  ?>天前</span>
+                              <div class="questionlist-actions">
+                                    <a title="回答" href="javascript:void(0)" class="list-answer icon1 icon_answer">
+                                    </a>
+                              </div>
+                            </div>
+                          </div>
+                          <div style="display:none" class="answer-area">
+                            <div id="answerLoadListData">
+                            {empty name="vo['answers']"}
+                              <div id="course_answer">
+                                <ul class="answer_list">
+                                </ul>
+                              </div>
+                            {else /}
+                              <div id="course_answer">
+                                <ul class="answer_list">
+                                  {volist name="vo['answers']" id='data'}
+                                     <li id='{$vo.Qid}'>
+                                       <div class="anlist_headpic">
+                                         <!-- <a href="__APP__/Index/video?Cid={$cInfo.Lid}"><img src="__PUBLIC__/upimages/{$vo.Uimg}" width="40" height="40"></a> -->
+                                         <a href="##"><img src="__PUBLIC__/upimages/{$vo.Uimg}" width="40" height="40"></a>
+                                       </div>
+                                       <div class="anlist_content">
+                                          <div class="u_name">
+                                            <!-- <a href="__APP__/User/index?Uid={$vo.Quid}">{$vo.Uname}</a> -->
+                                            <a href="##">{$vo.Uname}</a>
+                                          </div>
+                                          <p>{$data.Qanswer}</p>
+                                          <div class="anlist-bottom clearfix">
+                                            <span title="<?php echo floor((time()-strtotime($vo['Qdate']))/(3600*24)); ?>天前" class="fl timeago"><?php echo floor((time()-strtotime($vo['Qdate']))/(3600*24));  ?>天前</span>
+                                          </div>
+                                       </div>
+                                     </li>
+                                  {/volist}
+                                </ul>
+                              </div>
+                            {/empty}
+                            </div>
+                            <div class="notepage note-list-page"></div>
+                            <div class="publish clearfix" id="AnsPublist">
+                               <div class="border-box-1">
+                                 <div class="shot-input1 AnsInput">
+                                    <textarea maxlength="200" name="" class="an_s">您有想法？</textarea>
+                                    <p class="inputFontTip"><span class="inputFont"><em>0</em>/200</span></p>
+                                 </div>
+                               </div>
+                               <div class="anBtn">
+                                 <input type="button" title="回答" value="回答" class="J_AnsSubmit btn-off">
+                               </div>
+                            </div>
+                          </div>
+                        </li>
+                      {/volist}
+                    </ul>
+                  </div>
+                {/empty}
+              </div>
+              <div class="page note-list-page"></div>
+            </div>
+            <div class="tab-con" style="display:none" id="commentContent">
+              <div class="publish clearfix" id="ComPublist">
+                <div class="border-box">
+                  <div class="shot-input ComInput">
+                    <textarea maxlength="300" name="">请输入评论内容...</textarea>
+                    <p class="inputFontTip"><span class="inputFont"><em>0</em>/300</span></p>
+                  </div>
+                </div>
+                <input type="button" title="评论" value="评论" class="issueBtn" id="J_ComSubmit">
+              </div>
+              <div id="CommentLoadListData">
+                {empty name='comments'}
+                  <div class="uncomment">
+                    <span></span>
+                    <p>此课程暂无同学评论</p>
+                  </div>
+                  <div id="course_comment" style="display: none;">
+                    <ul>
+                    </ul>
+                  </div>
+                {else /}
+                  <div id="course_comment">
+                    <ul>
+                      {volist name='comments' id='vo'}
+                        <li id='{$vo.Did}'>
+                          <div class="notelist_headpic">
+                            <!-- <a href="__APP__/Index/video?Cid={$cInfo.Lid}"><img src="__PUBLIC__/upimages/{$vo.Uimg}" width="40" height="40"></a> -->
+                            <a href="##"><img src="__PUBLIC__/upimages/{$vo.Uimg}" width="40" height="40"></a>
+                          </div>
+                          <div class="notelist_content">
+                            <div class="u_name">
+                              <!-- <a href="__APP__/User/index?Uid={$vo.Duid}">{$vo.Uname}</a> -->
+                              <a href="##">{$vo.Uname}</a>
+                            </div>
+                            <p>{$vo.Ddesc}</p>
+                            <div class="notelist-bottom clearfix">
+                              <span title="<?php echo floor((time()-strtotime($vo['Ddate']))/(3600*24)); ?>天前" class="fl timeago"><?php echo floor((time()-strtotime($vo['Ddate']))/(3600*24));  ?>天前</span>
+                              <!-- <if condition='$vo.Duid neq $uid'>
+                                  <div class="notelist-actions">
+                                    <a title="采集" href="javascript:void(0);" class="Jcollect list-praise on" data-mid="987|114539">
+                                    <span class="icon icon_collection "></span>
+                                    </a>
+                                  </div>
+                              </if> -->
+                            </div>
+                          </div>
+                        </li>
+                      {/volist}
+                    </ul>
+                  </div>
+                {/empty}
+              </div>
+              <div class="page note-list-page"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="sidebar">
+        <div class="study_share">
+          <span class="fl">分享：</span>
+          <div class="bdsharebuttonbox bdshare-button-style2-16" data-bd-bind="1399774838364">
+                <a href="#" class="bds_more" data-cmd="more"></a>
+                <a title="分享到QQ空间" href="#" class="bds_qzone" data-cmd="qzone"></a>
+                <a title="分享到新浪微博" href="#" class="bds_tsina" data-cmd="tsina"></a>
+                <a title="分享到腾讯微博" href="#" class="bds_tqq" data-cmd="tqq"></a>
+                <a title="分享到人人网" href="#" class="bds_renren" data-cmd="renren"></a>
+              </div>
+        </div>
+        {notempty name="cInfo.Lcfile"}
+        <div class="dl_box">
+            <div>
+               <h3><img src="/Public/images/dl_icon1.png" class="dl"><a class="dl" href="__ROOT__\Public\uploadSource\{$cInfo.Lcfile}">资料下载</a></h3>
+            </div>
+        </div>
+        {/notempty}
+        <dl>
+          <input id="course_id" type="hidden" value="{$course_id}">
+          <dt>
+            <a href="javascript:;" class="changeUser">换一组</a>
+            <span style="color:#be3948" class="snums">{$num}</span> 位共同学习的同学
+          </dt>
+          <dd>
+            <ul class="users">
+               {volist name='learners' id='vo'}
+                 <li>
+                  <img src="__PUBLIC__/upimages/{$vo.Uimg}" width="80" height="80" title="{$vo.Uname}" alt="{$vo.Uname}" />
+                  <h3>
+                   <span>{$vo.Uname}</span>
+                  </h3>
+                  <em>{$vo.Uprovince}</em>
+                </li>
+              {/volist}
+            </ul>
+          </dd>
+        </dl>
+      </div>
+        <br class="clear" />
+    </div>
+  </div>
+<script type="text/javascript" src="__PUBLIC__/js/video.js"></script>
+
+   <div id="login">
+      <div class="rl-header">
+        <h3>温馨提示</h3>
+      </div>
+      <div class="rl-body">
+        <div class="rlf-group">
+          <p>{$status.msg}</p>
+        </div>
+         
+        <!-- <div class="rlf-group">
+          <label for="userdefault" ><input type="checkbox" checked="checked" id="userdefault">不再提醒</label>
+        </div> -->
+        </if>
+        <div class="rlf-group clearfix">
+          <p class="rlf-tip-wrap" id="signin-globle-error"></p>
+          <input type="button" id="btnBack" value="返回"  class="rlf-btn-gray fl" />
+          <input id="btnBuy" type="button" value="确定"  class="rlf-btn-green r" />
+        </div>
+      </div>
+    </div>
+{include file="../application/common/view/Footer.html" /}

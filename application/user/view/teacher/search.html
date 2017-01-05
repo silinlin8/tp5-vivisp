@@ -1,0 +1,51 @@
+<include file="Public/Header" />
+<head>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/style/testpaper.css">
+</head>
+<div class="quesitons-container">
+	<div class="btns-area">
+		<a href="/index.php/Teacher/questionAdd" class="btn-link">新增试题</a>
+		<a href="/index.php/Teacher/paperadd" class="btn-link">新增试卷</a>
+		<input type="text" id="search-value" />
+		<a href="javascript: void(0);" class="btn-link" id="search-btn">搜索试题</a>
+	</div>	
+	<table class="questions-show">
+		<empty name="data">
+			暂时不含有该试题
+			<else />
+			<thead class="show-titles">
+				<th>id号</th>
+				<th>题目</th>
+				<th>分数</th>
+				<th>标准答案</th>
+				<th>所属试卷</th>
+				<th>操作</th>
+			</thead>
+			<tbody class="show-main">
+				<volist name="data" id="vo">
+					<tr>
+						<td>{$vo.id}</td>
+						<td>{$vo.question}</td>
+						<td>{$vo.grade}</td>
+						<td>{$vo.answer}</td>
+						<td>{$vo.paper}</td>
+						<td class="ques-btn"><a href="/index.php/Teacher/quesEdit/id/{$vo.id}">编辑</a></td>
+						<td class="ques-btn"><a href="/index.php/Teacher/deleteques/id/{$vo.id}">删除</a></td>
+					</tr>
+				</volist>
+			</tbody>
+		</empty>
+	</table>
+	<div class="page">
+		{$page}
+	</div>
+</div>
+<script type="text/javascript">
+	$("#search-btn").click(function () {
+		if ($("#search-value").val()) {
+			window.location.href = "/index.php/Teacher/search/s/" + $("#search-value").val() + ".html";
+		}
+	})
+</script>
+</body>
+</html>

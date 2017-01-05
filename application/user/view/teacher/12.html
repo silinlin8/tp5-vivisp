@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>老师的主页</title>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jQueryform.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/teacherindex.js"></script>
+</head>
+<body>
+<div>
+<label>标题</label><input type="text" />
+</div>
+<div>
+<label>概述</label>
+<div style="margin-left: 30px;;"><textarea rows="20" cols="60"></textarea></div>
+</div>
+<div>
+<input type="button" value="确定" />
+<input type="button" value="重置" />
+</div>
+<div>
+<label>上传图片</label>
+    <form enctype="multipart/form-data" id="sky_upform" name="sky_upform" action="" method="post">
+    <table width="100%" border="0" align="center" cellpadding="3" cellspacing="0">
+      <tr>
+        <td width="100" align="right" class="f-12"></td>
+        <td class="f-12" align="left">
+        <input name="upfile" id="upfile" maxlength="20" size="40" type="file" value="" />
+        <input name="upmit" type="button" id="upmit" value="上传" onclick="sky_upfiles()"/>
+        <font color="red" id="sky_txt"></font></td>
+      </tr>
+    </form>
+</div>
+</body>
+</html>

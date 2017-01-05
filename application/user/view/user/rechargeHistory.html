@@ -1,0 +1,85 @@
+{include file="../application/common/view/Header.html" /}
+    <head>
+      <link rel="stylesheet" href="__PUBLIC__/style/home.css" />
+      <link rel="stylesheet" type="text/css" href="__PUBLIC__/style/settings.css">
+      <script type="text/javascript" src="__PUBLIC__/js/userindex.js"></script>
+    </head>
+    <div id="main">
+      <div class="main-body container clearfix" id="buy_container">
+        <div class="fr">
+          <img src="__PUBLIC__/upimages/{$info.Uimg}" width="220" height="220" />
+          <div class="main-aside">
+            <h4 class="myname">{$info.Uname}</h4>
+            <p class="job-title">&nbsp;</p>
+            <div class="mysignature">
+              <div class="signWrap">
+                <p id="signed" class="signed">{$info.Udesc}</p>
+                <em></em>
+              </div>
+              <textarea id="signing" class="signing" style="">{$info.Udesc}</textarea>
+              <p id="rlf-tip-wrap" class="rlf-tip-wrap"></p>
+              <div id="rpush_msg" class="push_msg">
+                <span id="publishsign" class="publishsign">发布</span>
+              </div>
+            </div>
+            <ul class="space-item">
+              <li><span class="icon-time icon" title="学习"></span>学习：{$studytime}分钟</li>
+              <li><span class="icon-note icon" title="笔记"></span>
+              笔记：<em>{$notecount}</em>条</a></li>
+              <li><span class="icon-jifen icon" title="积分"></span>
+              积分 : <em>{$info.Ubeans}</em>个</li>
+            </ul>
+          </div>
+        </div>
+        <div class="mymain-content fl">
+          <div class="myspace-list">
+            <a href="__APP__/User/User/index" class="myspace-home"></a>
+            <a href="__APP__/User/User/note" class="myspace-note"></a>
+            <a href="__APP__/User/User/buyRecord" class="myspace-buyRecord"></a>
+            <a href="__APP__/User/User/rechargeHistory" class="myspace-rechargeHistory myspace-rechargeactive"></a>
+          </div>
+          {block name="content"}
+          <div class="order">
+	            <table>
+			        <thead>
+	        			<tr>
+	        				<th class="buynum"><span>购买编号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></th>
+	        				<th class="buymoney"><span>充值现金&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></th>
+                  <th class="buybeans"><span>购买积分数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></th>
+                  <th class="buystatus"><span>购买状态&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></th>
+	        				<th class="buytime"><span>购买时间</span></th>
+	        			</tr>
+	        		</thead>
+	        		<tbody>
+		        		{volist name='rechargerecord' id='vo'}
+		        			<tr>
+		        			<th>{$vo.Rid}</th>
+	        				<th>{$vo.Rcash}</th>
+                  <th>{$vo.Rbeans}</th>
+                  <th>
+                    {if condition="$vo.Rtrade_status eq 1"}不可用(待付款)
+                    {elseif condition="$vo.Rtrade_status eq 2"/}不可用(待发货)
+                    {elseif condition="$vo.Rtrade_status eq 3"/}不可用(待确认收货)
+                    {elseif condition="$vo.Rtrade_status eq 4"/}购买成功
+                    {else/}不可用(交易中途关闭)
+                  {/if}
+                  </th>
+	        				<th>{$vo.Rtime}</th>
+	        				</tr>
+		        		{/volist}
+	        		</tbody>
+	        	</table>
+	        	<div class="page">
+              {$pageshow}
+            </div>
+            <input value="{$pagesize}" type="hidden" id="pagesize">
+            <input value="{$count}" type="hidden" id="count"> 
+            <input value="{$page}" type="hidden" id="pagenum">
+            <a href="#" id="omit">...</a> 
+        	</div>
+          {/block}
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript" src="__PUBLIC__/js/page.js"></script>
+{include file="../application/common/view/Footer.html" /}

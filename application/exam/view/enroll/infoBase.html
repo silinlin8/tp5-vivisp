@@ -1,0 +1,151 @@
+{empty name="uid"}
+	{include file="../application/common/view/IndexHeader.html" /}
+	{else /}
+	{include file="../application/common/view/Header.html" /}
+{/empty}
+<head>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/style/enroll-main.css" />
+	<script type="text/javascript" src="__PUBLIC__/js/verify.js"></script>
+</head>
+	<main class="profile-main">
+			<div class="profile-container" id="profile-container">
+				<div class="profile-header">
+					简历登记
+				</div>
+				<div class="personInfo">
+					<nav class="info-nav">
+						<ul class="info-nav-ul">
+							<li class="info-nav-li">
+								<a href="{$urlinfo.profile}" class="must-info" id="profile">个人信息</a>
+							</li>
+							<li class="info-nav-li">
+								<a href="{$urlinfo.eduback}" class="must-info" id="eduback">学历经历</a>
+							</li>
+							<li class="info-nav-li">
+								<a href="{$urlinfo.ability}" class="must-info" id="ability">语言能力、计算机能力及其他</a>
+							</li>
+							<li class="info-nav-li">
+								<a href="{$urlinfo.family}" id="family">主要家庭成员</a>
+							</li>
+							<li class="info-nav-li">
+								<a href="{$urlinfo.practice}" id="practice">主要社会实践或工作经历</a>
+							</li>
+							<li class="info-nav-li">
+								<a href="{$urlinfo.academy}" id="academy">学术成果</a>
+							</li>
+							<li class="info-nav-li">
+								<a href="{$urlinfo.award}" id="award">获奖情况</a>
+							</li>
+							<li class="info-nav-li">
+								<a href="{$urlinfo.attachment}" id="attachment">上传电子附件</a>
+							</li>
+							<li class="info-nav-li">
+								<a href="{$urlinfo.othercase}" id="othercase">其他情况说明</a>
+							</li>
+							<li class="info-nav-li padding-li">
+							</li>
+						</ul>
+					</nav>
+					{block name="form-area"}{/block}
+				</div>
+				<nav class="base-nav">
+					<ul class="base-nav-ul">
+						<li class="base-nav-li">	
+							<span class="big-three"></span>
+							我的简历
+							<ul class="second-ul">
+								<li>
+									<span class="small-three"></span>
+									<a href="__APP__/Exam/Enroll/profile.html">简历登记</a>
+								</li>
+								<li>
+									<span class="small-three"></span>
+									<a href="__APP__/Exam/Enroll/show.html">简历预览及确认</a>
+								</li>
+							</ul>
+						</li>
+						<li class="base-nav-li">	
+							<span class="big-three"></span>
+							我的求职
+							<ul class="second-ul">
+								<li>
+									<span class="small-three"></span>
+									<a href="javascript:;">搜索招聘需求</a>
+								</li>
+								<li>
+									<span class="small-three"></span>
+									<a href="javascript:;">我的收藏</a>
+								</li>
+								<li>
+									<span class="small-three"></span>
+									<a href="javascript:;">我的工作申请</a>
+								</li>
+							</ul>
+						</li>
+						<li class="base-nav-li">	
+							<span class="big-three"></span>
+							代办事项
+							<ul class="second-ul">
+								<li>
+									<span class="small-three"></span>
+									<a href="javascript:;">我的消息(0)</a>
+								</li>
+								<li>
+									<span class="small-three"></span>
+									<a href="javascript:;">成绩查询</a>
+								</li>
+							</ul>
+						</li>
+						<li class="base-nav-li">	
+							<span class="big-three"></span>
+							个人设置
+							<ul class="second-ul">
+								<li>
+									<span class="small-three"></span>
+									<a href="javascript:;">修改联系方式</a>
+								</li>
+								<li>
+									<span class="small-three"></span>
+									<a href="javascript:;">上传电子附件</a>
+								</li>
+								<li>
+									<span class="small-three"></span>
+									<a href="javascript:;">学籍认证</a>
+								</li>
+								<li>
+									<span class="small-three"></span>
+									<a href="javascript:;">修改密码</a>
+								</li>
+								<li>
+									<span class="small-three"></span>
+									<a href="javascript:;">常见问题</a>
+								</li>
+								<li>
+									<span class="small-three"></span>
+									<a href="javascript:;">意见反馈</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</nav>
+			</div>
+	</main>
+<script type="text/javascript">
+	$(function () {
+		var url = window.location.href,
+			pattern = /\/(\w+)\.html$/,
+			id,
+			result = pattern.exec(url);
+		if (result) {
+			id = result[1];
+		} else {
+			id = /\/(\w+)$/.exec(url)[1];
+		}
+		document.getElementById(id).className += " active";
+	});
+</script>
+{empty name="uid"}
+	{include file="../application/common/view/IndexFooter.html" /}
+	{else /}
+	{include file="../application/common/view/Footer.html" /}
+{/empty}

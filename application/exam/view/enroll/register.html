@@ -1,0 +1,156 @@
+{extend name="enroll/base" /}
+{block name="main"}
+	<main class="register-main">
+		<div class="register-logo">
+			<img src="__PUBLIC__/images/new_logo.png" id="logo-img"  width="30%" height="30%" />
+		</div>
+		{empty name="uid"}
+			<div class="at-info"><strong>注册完成用户可以直接点击登陆按钮</strong></div>
+		{/empty}
+		<div class="register-container">
+			<form action="__ROOT__/index.php/Exam/Enroll/acceptRegister" method="post" class="register-form">
+				<span class="form-span">
+					<label><span class="red-font">*</span>姓名:</label>
+					<input type="text" name="realname" id="name" />
+					<span class="attention">请采用身份证姓名</span>
+				</span>	
+				<span class="form-span">
+					<label><span class="red-font">*</span>身份证:</label>
+					<input type="text" name="identity" id="identity" />
+					<span class="attention">请填写有效的身份证号作为下次登录使用</span>
+				</span>	
+				<span class="form-span">
+					<label><span class="red-font">*</span>身份证确认:</label>
+					<input type="text" name="sure-identity" id="sureIdentity" onpaste="return false" />
+					<span class="attention">请再次输入身份证号码</span>
+				</span>
+				<span class="form-span">
+					<label><span class="red-font">*</span>密码:</label>
+					<input type="password" name="password" id="password" />
+					<span class="attention">6-16位字符，可由英文、数字及"-"、"_"组成，请区分大小写</span>
+				</span>
+				<span class="form-span">
+					<label><span class="red-font">*</span>密码确认:</label>
+					<input type="password" name="surePassword" id="sure-password" onpaste="return false"/>
+					<span class="attention">请再次输入密码</span>
+				</span>
+				<span class="form-span">
+					<label><span class="red-font">*</span>电子邮件:</label>
+					<input type="email" name="email" id="email" />
+					<span class="attention">请输入常用邮箱，很重要，用于找回密码</span>
+				</span>
+				<span class="form-span">
+					<label><span class="red-font">*</span>手机号码:</label>
+					<input type="text" name="mobile" id="mobile" />
+					<span class="attention">同意接收免费短信通知</span>
+				</span>	
+				<span class="form-span">
+					<label><span class="red-font">*</span>验证码:</label>
+					<input type="text" name="validate" id="validate" />
+					<a class="send-validate" href="javascript:void(0);">点击获取验证码</a>
+				</span>	
+				<span class="form-span">
+					<input type="checkbox" id="argee" name="argee" />
+					<span class="attention">我已阅读并同意<span class="laws">《诚信承诺》 《注册须知》 《应聘须知》</span></span>
+				</span>
+				<input type="hidden" name="sex" />
+				<input type="hidden" name="birthday" />
+				<input type="submit" value="立即注册" id="register" />
+			</form>
+		</div>
+		<strong class="attention-strong">**注意**：本网站为模拟国家电网网站注册,您的个人信息不会用做其他用途,同时您还可以用您注册时用的邮箱号及密码登录本网站</strong>	
+	</main>
+	<script type="text/javascript">
+	var form = document.getElementsByClassName("register-form")[0],
+		register = document.getElementById("register"),
+		flag = false;
+	var verify = new Validator();
+	verify.add(form.realname, [{
+		strategy: "isChineseName",
+		errorMsg: "姓名输入有错"
+	}]);
+	verify.add(form.identity, [{
+		strategy: "isIdentity",
+		errorMsg: "身份证输入有错"
+	}]);
+	verify.add(form.sureIdentity, [{
+		strategy: "isSimilar",
+		errorMsg: "身份证两次输入不同,请仔细核对", 
+		other:    form.identity
+	}]);
+	verify.add(form.password, [{
+		strategy: "isPassword",
+		errorMsg: "密码不符合规则"
+	}]);
+	verify.add(form.surePassword, [{
+		strategy: "isSimilar",
+		errorMsg: "密码两次输入不同,请仔细核对", 
+		other:    form.password
+	}]);
+	verify.add(form.email, [{
+		strategy: "isEmail",
+		errorMsg: "请正确填写邮箱"
+	}]);
+	verify.add(form.mobile, [{
+		strategy: "isMobile",
+		errorMsg: "请正确填写手机号"
+	}]);
+	verify.add(form.argee, [{
+		strategy: "isAgree",
+		errorMsg: "请您勾选同意选框"
+	}]);
+	verify.add(form.validate, [{
+		strategy: "isNonEmpty",
+		errorMsg: "请您填写验证码"
+	}]);
+	register.onclick = function (e) {
+		e.preventDefault();
+		if (!flag) {
+			layer.alert("请正确输入验证码");
+			return void 0;
+		}
+		verify.start.call(verify, layer.alert, function () {
+			var str = form.identity.value,
+				len = str.length;
+			form.sex.value = cancelIdentity[len].getSex(str);
+			form.birthday.value = cancelIdentity[len].getBirthDay(str);
+			form.submit();
+		});
+	};
+	$(".send-validate").click(function () {
+		var mobile = $("#mobile").val();
+		if (/^\d{11}$/.test(mobile)) {
+			$(this).text("请在左侧填入验证码"); 
+			$(this).attr("class", "stop-validate");
+			setTimeout(function () {
+				layer.alert("验证码已经失效,请再次获取");
+				$(".stop-validate").attr("class", "send-validate");
+				$(".send-validate").text("点击获取验证码");
+			}, 1200000);
+			$.post(
+				"validate",
+				{
+					mobile: mobile
+				},
+				function (data) {
+					if (data) {
+						alert("请查看手机短信,将6位验证码填入,验证码有效时间为2分钟");
+						$("#validate").blur(function () {
+							var str = "validate=" + $("#validate").val();
+							if ( $("#validate").val().length !== 6 || document.cookie.indexOf(str) === -1) {
+								layer.alert("验证码输入有误");
+							} else {
+								flag = true;
+							}
+						});
+					} else {
+						layer.alert("发生未知错误");
+					}
+				}
+			);
+		} else {
+			layer.alert("手机号码输入有错误");
+		}
+	});
+	</script>
+{/block}

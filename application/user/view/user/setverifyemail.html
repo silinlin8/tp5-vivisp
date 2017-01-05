@@ -1,0 +1,21 @@
+<include file="../application/common/view/Header.html" />
+<link rel="stylesheet" href="__PUBLIC__/style/home.css" />
+<link rel="stylesheet" href="__PUBLIC__/style/settings.css">
+    <div id="main">
+      <div class="ccontainer clearfix">
+        <include file="Public:User_Setting" />
+        <div class="setting-right">
+          <div class="setting-right-wrap settings">
+            <div class="setting-verify">
+              <h1>当前邮箱</h1>
+              <p>{$email}</p>
+              <div class="verify-status">
+                <span class="verify-un">邮箱未验证</span>
+              </div>
+              <button id="verify-btn-sent" class="rlf-btn-green">发送验证邮件</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<include file="../application/common/view/Footer.html" />

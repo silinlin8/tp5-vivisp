@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>待上传课程</title>
+		<meta charset="utf-8">
+	</head>
+	<body>
+	<table>
+<!-- 		<thead>
+			<th>
+				<td>课程名称</td>
+				<td>所属课程</td>
+			</th>
+		</thead> -->
+		<volist name="update" id="vo">
+			<tr>
+				<td>
+					{$vo.Ltitle}
+				</td>
+				<td>
+					{$vo.Lpptitle}
+				</td>
+			</tr>
+		</volist>
+	</table>
+	</body>
+</html>
